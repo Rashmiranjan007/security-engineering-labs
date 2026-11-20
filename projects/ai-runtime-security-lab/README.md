@@ -32,7 +32,7 @@ flowchart TD
     EXEC --> ALERT
 ```
 
-## Run locally
+## How to run
 
 Requires Python 3.10+ and the standard library only.
 
