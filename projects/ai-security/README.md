@@ -1,49 +1,66 @@
 # AI Application Security Lab
 
-## Objective
-Build a practical, defensive reference implementation for securing LLM-powered applications, including model access, prompts, retrieval-augmented generation (RAG), tools, and data flows.
+A dependency-free Python lab demonstrating practical security controls for LLM and RAG applications. This is a defensive engineering portfolio project, not a production security library.
 
-## Threat model
-Assets: system prompts, user data, retrieved documents, model/API credentials, tool permissions, and generated outputs.
+## Implemented
+- Prompt-injection phrase screening (a detection signal, not a complete defense)
+- Tenant-isolated document retrieval in trusted application code
+- Tool allowlisting and human approval for high-impact actions
+- Strict structured-output validation
+- Secret-like value redaction for demonstration logs
+- Automated regression tests and GitHub Actions CI
 
-Trust boundaries:
-1. User input to application
-2. Application to model provider
-3. Retrieval service to document store
-4. Model/tool router to external tools
-5. Application logs and monitoring pipeline
+## Run locally
+Requires Python 3.10+.
 
-Threats include direct and indirect prompt injection, sensitive information disclosure, insecure output handling, excessive agency, data poisoning, denial of service, and supply-chain compromise.
+```bash
+cd projects/ai-security
+python -m unittest discover -s tests -v
+python -m app.demo
+```
 
-## Security controls
-- Treat user prompts and retrieved content as untrusted data.
-- Keep authorization decisions outside the model; enforce them in deterministic application code.
-- Apply least privilege to tools and service identities.
-- Enforce tenant-aware retrieval filters before context reaches the model.
-- Redact secrets and sensitive data before logging; define retention controls.
-- Validate model output against schemas before downstream use.
-- Add rate limits, token budgets, timeouts, and abuse monitoring.
-- Store API keys in a secrets manager; never commit credentials.
-- Use human approval for high-impact actions.
+No API key, external model, or third-party Python dependency is required.
 
-## Lab plan
-- [ ] Create a minimal toy RAG application with synthetic documents.
-- [ ] Demonstrate direct and indirect prompt injection safely.
-- [ ] Test cross-tenant retrieval isolation.
-- [ ] Add output schema validation and tool authorization.
-- [ ] Add secret redaction and security event logging.
-- [ ] Document tests, findings, and mitigations.
+## Architecture
+```text
+User Request
+    |
+    v
+Trusted Application Layer ---> Input screening (signal only)
+    |
+    +----> Tenant authorization ---> Retrieval store
+    |
+    +----> Model adapter (future extension; untrusted output)
+                  |
+                  v
+          Output schema validation
+                  |
+                  v
+          Policy-controlled tool dispatcher
+                  |
+          Human approval for high-impact actions
+                  |
+                  v
+              Tool execution
 
-## Validation scenarios
-| Scenario | Expected secure behavior |
-|---|---|
-| Prompt asks for system prompt | No confidential prompt or secret is disclosed |
-| Retrieved document contains hostile instructions | Content is treated as untrusted data |
-| User requests another tenant's document | Retrieval authorization denies access |
-| Model proposes an unauthorized tool action | Application policy blocks execution |
-| Output contains malformed JSON | Schema validation rejects it |
+Logs: minimize data -> redact known secrets -> retention controls
+```
 
-## Success criteria
-Every test has a reproducible input, expected result, observed result, and remediation note.
+## Important design decisions
+1. Prompt screening is only a detection signal. Regexes cannot reliably identify all prompt injection.
+2. Tenant authorization is deterministic and happens outside the model.
+3. The model cannot grant itself tool permissions.
+4. Each real tool must independently authorize its operation and resource.
+5. Schema validation checks shape, not truthfulness or safety.
 
-> Use synthetic data and isolated local environments only. This project is for defensive testing and education.
+## Next milestones
+- [ ] Add a mock RAG API with authenticated tenant context.
+- [ ] Add indirect-injection tests in synthetic retrieved documents.
+- [ ] Add policy tests for tool arguments and resource ownership.
+- [ ] Add Docker and container hardening checks.
+- [ ] Add dependency and secret scanning to CI.
+- [ ] Map controls to OWASP LLM Top 10.
+
+See [Threat Model](docs/THREAT-MODEL.md) for scope, trust boundaries, threats, controls, and residual risks.
+
+> Use synthetic data and authorized lab systems only. Never commit real secrets or customer data.
