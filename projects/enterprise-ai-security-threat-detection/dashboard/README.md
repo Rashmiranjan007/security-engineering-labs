@@ -4,14 +4,21 @@ This is a dependency-free, browser-based dashboard for the synthetic detection r
 
 ## How to run
 
-From this project directory:
+Use two terminals. In **Terminal 1**, from the repository root:
 
 ```bash
+cd projects/enterprise-ai-security-threat-detection
 python detector.py
+```
+
+In **Terminal 2**, from the same project directory:
+
+```bash
+cd projects/enterprise-ai-security-threat-detection
 python -m http.server 8000
 ```
 
-Open [http://localhost:8000/dashboard/](http://localhost:8000/dashboard/) in your browser.
+Open [http://localhost:8000/dashboard/](http://localhost:8000/dashboard/) in your browser. Keep the HTTP server running while using the dashboard.
 
 ## Dashboard features
 
