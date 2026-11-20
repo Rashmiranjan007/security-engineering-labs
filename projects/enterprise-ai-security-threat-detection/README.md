@@ -12,6 +12,7 @@ This project is the enterprise operating layer for the repository's focused labs
 - Severity-weighted risk scoring and recommended response actions
 - JSON evidence output and Markdown executive/operations report
 - Governance model, ownership, escalation, and response playbook
+- Local SOC simulation with synthetic ingestion, alert correlation, incident lifecycle, audit trail, and playbooks
 - Unit tests and GitHub Actions validation
 
 ## Architecture
@@ -66,6 +67,10 @@ The JSON and Markdown reports are written to `reports/latest.json` and `reports/
 ## Local dashboard
 
 A dependency-free browser dashboard provides incident KPIs, severity distribution, workload exposure, searchable and filterable detections, and a selectable incident investigation panel. See [dashboard instructions](dashboard/README.md). Generate the local report first, then serve the project directory with Python's built-in HTTP server.
+
+## Local SOC simulation
+
+A loopback-only SOC console adds simulated telemetry ingestion, workload/actor/time-window correlation, incident ownership, an audited lifecycle, and event-specific response playbooks. See [SOC lab instructions](soc-lab/README.md). Start it with `python soc-lab/server.py` from this project directory. The service is bound to localhost and is not a production integration.
 
 ## Risk scoring
 
