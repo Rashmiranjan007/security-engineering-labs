@@ -1,0 +1,61 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-approved-ai-workloads
+  annotations:
+    policies.kyverno.io/title: Require approved AI workload images
+    policies.kyverno.io/category: Supply Chain Security
+    policies.kyverno.io/subject: Pod
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+    - name: require-approved-registry-and-digest
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+              namespaces:
+                - ai-inference
+      validate:
+        message: Use the approved registry and pin images to immutable sha256 digests.
+        foreach:
+          - list: "request.object.spec.containers"
+            deny:
+              conditions:
+                any:
+                  - key: "{{ element.image }}"
+                    operator: NotMatches
+                    value: "^registry\\.example\\.com/.+@sha256:[a-f0-9]{64}$"
+          - list: "request.object.spec.initContainers"
+            deny:
+              conditions:
+                any:
+                  - key: "{{ element.image }}"
+                    operator: NotMatches
+                    value: "^registry\\.example\\.com/.+@sha256:[a-f0-9]{64}$"
+    - name: require-restricted-container-context
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+              namespaces:
+                - ai-inference
+      validate:
+        message: Containers must be non-root, read-only, non-privileged and drop all capabilities.
+        pattern:
+          spec:
+            securityContext:
+              runAsNonRoot: true
+              seccompProfile:
+                type: RuntimeDefault
+            containers:
+              - securityContext:
+                  allowPrivilegeEscalation: false
+                  readOnlyRootFilesystem: true
+                  privileged: false
+                  capabilities:
+                    drop:
+                      - ALL
