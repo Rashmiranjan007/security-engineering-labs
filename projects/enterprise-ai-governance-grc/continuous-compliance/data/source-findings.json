@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "snapshot_id": "portfolio-demo-2026-11",
+  "generated_on": "2026-11-20",
+  "sources": [
+    {"source_id":"ai-threat-detection","source_type":"ai_security","findings":[
+      {"finding_id":"AISEC-1001","signal":"cross_tenant_retrieval","asset":"knowledge-assistant","severity":"critical","status":"open","observed_at":"2026-11-19T10:15:00Z","evidence_ref":"sample://ai-security/events/1001","summary":"Synthetic cross-tenant retrieval signal"},
+      {"finding_id":"AISEC-1002","signal":"unauthorized_tool_call","asset":"support-agent","severity":"high","status":"in_progress","observed_at":"2026-11-19T11:20:00Z","evidence_ref":"sample://ai-security/events/1002","summary":"Synthetic tool authorization signal"},
+      {"finding_id":"AISEC-1003","signal":"model_integrity_failure","asset":"model-registry/model-x","severity":"critical","status":"resolved","observed_at":"2026-11-18T08:00:00Z","evidence_ref":"sample://ai-security/events/1003","resolution_evidence_ref":"sample://tickets/AISEC-1003/closure","summary":"Synthetic model integrity signal"}
+    ]},
+    {"source_id":"eks-cloud-posture","source_type":"cloud_kubernetes","findings":[
+      {"finding_id":"EKS-2001","signal":"privileged_ai_workload","asset":"cluster-a/namespace-ai/pod-inference","severity":"critical","status":"open","observed_at":"2026-11-19T12:00:00Z","evidence_ref":"sample://eks/posture/2001","summary":"Synthetic privileged AI workload configuration"},
+      {"finding_id":"EKS-2002","signal":"image_digest_mismatch","asset":"cluster-b/namespace-ai/model-server","severity":"high","status":"open","observed_at":"2026-11-19T12:05:00Z","evidence_ref":"sample://eks/runtime/2002","summary":"Synthetic image digest mismatch"},
+      {"finding_id":"EKS-2003","signal":"network_policy_drift","asset":"cluster-a/namespace-ai","severity":"medium","status":"accepted","observed_at":"2026-11-17T07:30:00Z","evidence_ref":"sample://eks/config/2003","summary":"Synthetic network policy drift with time-bound exception"}
+    ]},
+    {"source_id":"model-supply-chain","source_type":"model_supply_chain","findings":[
+      {"finding_id":"MSC-3001","signal":"artifact_digest_mismatch","asset":"model-registry/model-y","severity":"critical","status":"open","observed_at":"2026-11-19T13:45:00Z","evidence_ref":"sample://model-supply-chain/3001","summary":"Synthetic artifact digest mismatch"},
+      {"finding_id":"MSC-3002","signal":"unapproved_model_source","asset":"model-registry/model-z","severity":"high","status":"open","observed_at":"2026-11-19T14:00:00Z","evidence_ref":"sample://model-supply-chain/3002","summary":"Synthetic unapproved model source"}
+    ]}
+  ]
+}
