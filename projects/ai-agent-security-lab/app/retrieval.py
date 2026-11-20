@@ -1,3 +1,4 @@
+import uuid
 import requests
 from qdrant_client import QdrantClient, models
 from .config import OLLAMA_URL, OLLAMA_EMBED_MODEL, QDRANT_URL, QDRANT_COLLECTION, VECTOR_SIZE
@@ -27,10 +28,11 @@ def embed(text: str) -> list[float]:
 def ingest_document(document_id: str, text: str, principal, allowed_users: list[str]):
     ensure_collection()
     vector = embed(text)
+    stable_id = str(uuid.uuid5(uuid.NAMESPACE_URL, f"ai-agent-lab:{principal.tenant_id}:{document_id}"))
     client.upsert(
         collection_name=QDRANT_COLLECTION,
         points=[models.PointStruct(
-            id=abs(hash(f"{principal.tenant_id}:{document_id}")) % (2**63),
+            id=stable_id,
             vector=vector,
             payload={
                 "document_id": document_id,
