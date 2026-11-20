@@ -39,7 +39,7 @@ flowchart TD
 | Runtime | Security events, trace correlation, alerting and response | docs/RUNTIME-MONITORING.md |
 | Governance | Threat model, ownership, exception expiry, evidence | docs/THREAT-MODEL.md |
 
-## Run local policy tests
+## How to run
 
 Requires Python 3.10+ and uses only the standard library.
 
