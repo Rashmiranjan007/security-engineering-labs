@@ -1,0 +1,50 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-pod-hardening
+  annotations:
+    policies.kyverno.io/title: Require baseline pod hardening
+    policies.kyverno.io/category: Kubernetes Security
+    policies.kyverno.io/subject: Pod
+    policies.kyverno.io/description: >-
+      Validates selected pod and container hardening controls. Test in audit mode
+      before enforcing in production.
+spec:
+  validationFailureAction: Audit
+  background: true
+  rules:
+    - name: require-nonroot-and-seccomp
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+              namespaces:
+                - security-lab
+      validate:
+        message: "Pods must run as non-root and use RuntimeDefault seccomp."
+        pattern:
+          spec:
+            securityContext:
+              runAsNonRoot: true
+              seccompProfile:
+                type: RuntimeDefault
+    - name: require-container-hardening
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+              namespaces:
+                - security-lab
+      validate:
+        message: "Containers must disable privilege escalation, use a read-only root filesystem, and drop all capabilities."
+        foreach:
+          - list: "request.object.spec.containers"
+            pattern:
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop:
+                    - ALL
