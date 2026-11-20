@@ -1,0 +1,33 @@
+# Illustrative policy configuration; not a drop-in gateway product configuration.
+apiVersion: security.example/v1
+kind: AIModelGatewayPolicy
+metadata:
+  name: enterprise-default
+spec:
+  defaultAction: deny
+  modelAllowlist:
+    - provider: approved-provider
+      model: approved-enterprise-model
+      environment: production
+  requestLimits:
+    maxInputCharacters: 20000
+    maxOutputTokens: 2000
+    maxRequestsPerMinutePerUser: 20
+    maxConcurrentRunsPerUser: 3
+    timeoutSeconds: 45
+  dataPolicy:
+    rejectCredentialLikeContent: true
+    requireClassification: true
+    blockRestrictedDataToExternalProviders: true
+    logRawPromptsByDefault: false
+  toolPolicy:
+    requireServerSideAuthorization: true
+    requireArgumentSchemaValidation: true
+    requireHumanApprovalFor:
+      - modify_cloud_resource
+      - delete_business_record
+      - rotate_privileged_credential
+  telemetry:
+    emitStructuredSecurityEvents: true
+    includeRawPrompt: false
+    includeRawModelOutput: false
