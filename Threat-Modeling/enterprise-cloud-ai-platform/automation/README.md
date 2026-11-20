@@ -28,7 +28,7 @@ The inventory declares:
 
 See [sample-architecture.json](sample-architecture.json).
 
-## Run locally
+## How to run
 
 Requires Python 3.10+ and no third-party packages.
 
