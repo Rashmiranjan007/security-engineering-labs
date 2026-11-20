@@ -61,6 +61,10 @@ python secret_scanner.py fixtures
 
 The scanner is read-only and reports file paths, line numbers, and rule names; it does not print matched secret values. Scan only directories you are authorized to inspect. Treat results as leads for review, not proof that a credential is valid.
 
+## Detailed study notes
+
+These are theory-first notes, separate from the executable exercises. Follow the [study guide](study-notes/README.md) for nine modules covering cryptographic foundations, symmetric and asymmetric cryptography, hashes/MACs/signatures/password storage, PKI/TLS, enterprise key management, cloud and Kubernetes secrets, cryptographic attacks, post-quantum migration, architecture and interview review.
+
 ## Security design notes
 
 - AES-GCM provides authenticated encryption. A 96-bit nonce is generated randomly for each encryption under a key. Never reuse a nonce with the same AES-GCM key.
