@@ -13,7 +13,7 @@ A synthetic integration bridge that maps Kubernetes audit, EKS identity, admissi
 - Runtime threat alert from a generic container runtime sensor
 - Normalization into the SOC detection engine and incident lifecycle
 
-## Run end to end
+## How to run
 
 Terminal 1 — start the SOC API and console:
 
