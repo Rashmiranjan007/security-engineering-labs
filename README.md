@@ -42,7 +42,10 @@ There is no single repository-wide install: each lab has its own prerequisites a
 | AI red-team automation | [AI Red Team Automation](projects/ai-red-team-automation-framework/README.md#how-to-run) |
 | Model supply chain | [AI Model Supply Chain](projects/ai-model-supply-chain-lab/README.md#how-to-run) |
 | AI assessment framework | [AI Security Assessment](projects/ai-security-assessment-framework/README.md#how-to-run) |
-| Enterprise AI SOC + EKS | [Threat Detection Platform](projects/enterprise-ai-security-threat-detection/README.md#how-to-run) |\n| Interactive dashboard | [Dashboard run guide](projects/enterprise-ai-security-threat-detection/dashboard/README.md#how-to-run) |\n| Local SOC console/API | [SOC lab run guide](projects/enterprise-ai-security-threat-detection/soc-lab/README.md#how-to-run) |\n| EKS runtime simulation | [EKS simulation run guide](projects/enterprise-ai-security-threat-detection/eks-runtime-simulation/README.md#how-to-run) |
+| Enterprise AI SOC + EKS | [Threat Detection Platform](projects/enterprise-ai-security-threat-detection/README.md#how-to-run) |
+| Interactive dashboard | [Dashboard run guide](projects/enterprise-ai-security-threat-detection/dashboard/README.md#how-to-run) |
+| Local SOC console/API | [SOC lab run guide](projects/enterprise-ai-security-threat-detection/soc-lab/README.md#how-to-run) |
+| EKS runtime simulation | [EKS simulation run guide](projects/enterprise-ai-security-threat-detection/eks-runtime-simulation/README.md#how-to-run) |
 | Enterprise threat modeling | [Threat Modeling](Threat-Modeling/enterprise-cloud-ai-platform/README.md#how-to-run) |
 
 ### Run the dashboard, SOC console, and EKS telemetry simulation together
@@ -94,6 +97,12 @@ Start with a local/offline validation command before deploying any manifest or T
 
 ```text
 projects/
+  aws-eks-ai-security-platform/
+    terraform/
+    kubernetes/
+    policies/kyverno/
+    tools/
+    tests/
   cloud-security-posture/
     terraform/secure/
     docs/
