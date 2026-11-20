@@ -19,6 +19,7 @@ I am a Principal Information Security Engineer with 12+ years of experience acro
 | [Hands-on AI Agent Security Lab](projects/ai-agent-security-lab/README.md) | Runnable local LLM + RAG + agent-tool security lab | Ollama, Qdrant, FastAPI, tenant ACLs, server-side tool policy, Docker Compose |
 | [Enterprise AI Security Assessment Framework](projects/ai-security-assessment-framework/README.md) | Risk-based assessment of LLM, RAG, agents, model supply chain, and runtime controls | Reference architecture, control matrix, assessment playbook, 20 synthetic tests, catalogue validator |
 | [AI Runtime Security Lab](projects/ai-runtime-security-lab/README.md) | Runtime guardrails and detection simulation for AI applications and agents | Prompt-injection indicators, tenant binding, tool authorization, approval gates, abuse limits, output redaction, tests |
+| [AI Model Supply Chain Security Lab](projects/ai-model-supply-chain-lab/README.md) | Verify model artifact integrity and promotion provenance | SHA-256 verification, source/license allowlists, digest-bound approval, tamper and path-traversal tests |
 
 ## Engineering approach
 
