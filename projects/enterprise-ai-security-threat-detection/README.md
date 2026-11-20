@@ -53,7 +53,7 @@ See [reference architecture](docs/reference-architecture.md), [detection catalog
 | Model integrity failure | Artifact digest differs from approved digest | Critical |
 | AI policy drift | Runtime policy version differs from approved version | Medium |
 
-## Run locally
+## How to run
 
 Python 3.10+; standard library only.
 
