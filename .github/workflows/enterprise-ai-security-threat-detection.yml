@@ -1,0 +1,30 @@
+name: Enterprise AI Security Threat Detection
+
+on:
+  push:
+    paths:
+      - 'projects/enterprise-ai-security-threat-detection/**'
+      - '.github/workflows/enterprise-ai-security-threat-detection.yml'
+  pull_request:
+    paths:
+      - 'projects/enterprise-ai-security-threat-detection/**'
+      - '.github/workflows/enterprise-ai-security-threat-detection.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Generate synthetic detection report
+        working-directory: projects/enterprise-ai-security-threat-detection
+        run: python detector.py
+      - name: Run unit tests
+        working-directory: projects/enterprise-ai-security-threat-detection
+        run: python -m unittest discover -s tests -v
