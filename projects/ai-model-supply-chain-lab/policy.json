@@ -1,0 +1,12 @@
+{
+  "allowed_sources": [
+    "https://models.example.org/"
+  ],
+  "allowed_licenses": [
+    "Apache-2.0",
+    "MIT",
+    "BSD-3-Clause"
+  ],
+  "require_approval": true,
+  "require_provenance": true
+}
