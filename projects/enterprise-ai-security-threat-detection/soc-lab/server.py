@@ -107,6 +107,8 @@ class Handler(BaseHTTPRequestHandler):
             return
         try:
             payload = self._body()
+            if not isinstance(payload, dict):
+                raise ValueError("Update body must be a JSON object")
             actor = payload.pop("actor", "soc-analyst")
             with LOCK:
                 state = load_state()
