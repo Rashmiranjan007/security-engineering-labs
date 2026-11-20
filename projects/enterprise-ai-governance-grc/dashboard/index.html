@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Governance & GRC Dashboard</title>
+<style>
+:root{font-family:system-ui,sans-serif;color:#172033;background:#f4f6fa}body{margin:0;padding:24px}main{max-width:1100px;margin:auto}h1{margin-bottom:4px}.muted{color:#5b6578}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}.card{background:white;border:1px solid #dce2ec;border-radius:12px;padding:16px;margin:12px 0}.metric{font-size:28px;font-weight:700}.risk{font-weight:700}.Critical{color:#b42318}.High{color:#c05b00}.Moderate{color:#8a6d00}.Low{color:#16804a}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px;border-bottom:1px solid #e4e8ef;vertical-align:top}button{padding:9px 12px;border:1px solid #aab4c5;border-radius:8px;background:#fff;cursor:pointer}#error{color:#b42318}
+</style></head>
+<body><main>
+<h1>AI Governance & GRC</h1><p class="muted">Local synthetic assessment report · run the governance engine before opening this dashboard.</p>
+<button id="reload">Reload report</button> <span id="status" class="muted"></span><p id="error"></p>
+<section class="grid" id="metrics"></section>
+<section class="card"><h2>AI system assessments</h2><div style="overflow-x:auto"><table><thead><tr><th>System</th><th>Lifecycle</th><th>Inherent</th><th>Residual</th><th>Control evidence</th><th>Next review</th></tr></thead><tbody id="rows"></tbody></table></div></section>
+<section class="card"><h2>Control gaps</h2><div id="gaps"></div></section>
+<p class="muted">Demo only. Scores are illustrative, not a legal classification, compliance verdict, audit opinion or substitute for human risk acceptance.</p>
+</main>
+<script>
+async function load(){const status=document.querySelector('#status'),error=document.querySelector('#error');error.textContent='';status.textContent='Loading…';try{const response=await fetch('../reports/latest.json',{cache:'no-store'});if(!response.ok)throw new Error('Report not found. Run the Python governance engine first.');const data=await response.json();const metrics=document.querySelector('#metrics');metrics.innerHTML='';for(const [name,value] of Object.entries(data.risk_summary)){const card=document.createElement('div');card.className='card';const label=document.createElement('div');label.textContent=name+' residual risk';const number=document.createElement('div');number.className='metric '+name;number.textContent=value;card.append(label,number);metrics.append(card)}document.querySelector('#rows').replaceChildren();document.querySelector('#gaps').replaceChildren();for(const item of data.assessments){const tr=document.createElement('tr');const values=[item.id+' — '+item.name,item.lifecycle,item.inherent_band+' ('+item.inherent_score+')',item.residual_band+' ('+item.residual_score+')',item.implemented_with_evidence+'/'+item.required_control_count,item.next_review+(item.overdue_review?' · OVERDUE':'')];values.forEach((value,index)=>{const td=document.createElement('td');td.textContent=value;if(index===3)td.className='risk '+item.residual_band;tr.append(td)});document.querySelector('#rows').append(tr);if(item.control_gaps.length){const block=document.createElement('p');block.textContent=item.id+': '+item.control_gaps.map(g=>g.id+' ('+g.status+')').join(', ');document.querySelector('#gaps').append(block)}}status.textContent='Generated '+data.generated_on+' · '+data.system_count+' systems'}catch(e){error.textContent=e.message;status.textContent=''}}document.querySelector('#reload').addEventListener('click',load);load();
+</script></body></html>
