@@ -51,8 +51,9 @@ class RuntimeGuardTests(unittest.TestCase):
 
     def test_rate_limit(self):
         event = {"subject": "u1", "tenant_id": "a", "resource_tenant_id": "a", "prompt": "ok"}
-        self.guard.evaluate_request(event)
-        self.guard.evaluate_request(event)
+        for _ in range(5):
+            result = self.guard.evaluate_request(event)
+            self.assertNotIn("REQUEST_RATE_LIMIT", result["reasons"])
         result = self.guard.evaluate_request(event)
         self.assertIn("REQUEST_RATE_LIMIT", result["reasons"])
 
