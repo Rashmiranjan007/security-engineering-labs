@@ -9,7 +9,7 @@ from .retrieval import ingest_document, retrieve
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("ai-agent-security-lab")
-app = FastAPI(title="AI Agent Security Lab", version="0.1.0")
+app = FastAPI(title="AI Agent Security Lab", version="0.1.1")
 
 
 class IngestRequest(BaseModel):
@@ -26,7 +26,6 @@ class ToolRequest(BaseModel):
     tool: str = Field(min_length=1, max_length=80)
     action: str = Field(min_length=1, max_length=40)
     resource_id: str = Field(min_length=1, max_length=100)
-    resource_tenant: str = Field(min_length=1, max_length=100)
     arguments: dict = Field(default_factory=dict)
     approval_ref: str | None = None
 
@@ -62,7 +61,7 @@ def chat(body: ChatRequest, principal: Principal = Depends(get_demo_principal)):
 @app.post("/tool-proposal")
 def tool_proposal(body: ToolRequest, principal: Principal = Depends(get_demo_principal)):
     decision = authorize_tool(
-        principal, body.tool, body.action, body.resource_tenant, body.arguments, body.approval_ref
+        principal, body.tool, body.action, body.resource_id, body.arguments, body.approval_ref
     )
     event_id = str(uuid.uuid4())
     logger.info("tool_policy_decision event_id=%s tenant=%s tool=%s decision=%s",
@@ -70,5 +69,5 @@ def tool_proposal(body: ToolRequest, principal: Principal = Depends(get_demo_pri
     if decision.decision == Decision.ALLOW:
         # Synthetic response only. No real ticketing integration or mutation.
         return {"decision": decision.decision.value, "reason": decision.reason,
-                "simulated_result": {"ticket_id": body.arguments.get("ticket_id"), "status": "read_only_demo"}}
+                "simulated_result": {"ticket_id": body.resource_id, "status": "read_only_demo"}}
     return {"decision": decision.decision.value, "reason": decision.reason}
