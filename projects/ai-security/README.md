@@ -14,7 +14,7 @@ A defensive engineering lab for securing an AI/RAG application. It demonstrates 
 - Bounded in-memory runtime event telemetry
 - Automated API/regression tests, GitHub Actions CI, and a non-root Docker image
 
-## Run locally
+## How to run
 
 Requires Python 3.10+.
 
