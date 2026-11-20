@@ -21,7 +21,7 @@ I am a Principal Information Security Engineer with 12+ years of experience acro
 | [AI Runtime Security Lab](projects/ai-runtime-security-lab/README.md) | Runtime guardrails and detection simulation for AI applications and agents | Prompt-injection indicators, tenant binding, tool authorization, approval gates, abuse limits, output redaction, tests |
 | [AI Model Supply Chain Security Lab](projects/ai-model-supply-chain-lab/README.md) | Verify model artifact integrity and promotion provenance | SHA-256 verification, source/license allowlists, digest-bound approval, tamper and path-traversal tests |
 | [AI Red Team Automation Framework](projects/ai-red-team-automation-framework/README.md) | Execute deterministic AI security simulations against a local mock target | Prompt injection, RAG isolation, agent authorization, canary leakage, abuse throttling, risk scoring, JSON/Markdown reports, CI tests |
-| [Enterprise AI Security Threat Detection Platform](projects/enterprise-ai-security-threat-detection/README.md) | Enterprise AI security architecture, detection engineering, risk operations, and governance | Reference architecture, six detection rules, synthetic event engine, risk scoring, incident reports, interactive local dashboard, simulated SOC console, alert correlation, incident lifecycle, response playbooks, CI tests |
+| [Enterprise AI Security Threat Detection Platform](projects/enterprise-ai-security-threat-detection/README.md) | Enterprise AI security architecture, detection engineering, risk operations, and governance | Reference architecture, six detection rules, synthetic event engine, risk scoring, incident reports, interactive local dashboard, simulated SOC console, EKS runtime telemetry adapter, Kubernetes detection rules, incident correlation, response playbooks, CI tests |
 
 ## Engineering approach
 
@@ -65,12 +65,13 @@ projects/
     reports/ (generated)
     dashboard/ (local HTML dashboard)
     soc-lab/ (local SOC API, console, playbooks, tests)
+    eks-runtime-simulation/ (synthetic EKS event adapter and tests)
 .github/workflows/
 ```
 
 ## Validation
 
-GitHub Actions workflows validate the AI application lab, infrastructure examples, AI red-team catalogue, enterprise AI policy engine, and hands-on AI agent lab policy tests. The AI Red Team Automation Framework runs a local deterministic mock suite, verifies that intentionally vulnerable control profiles are detected, and executes unit tests. The Enterprise AI Security Threat Detection Platform validates synthetic telemetry, applies versioned detection rules, generates risk-ranked reports, includes a local interactive dashboard, and runs unit tests. See each project README for prerequisites and safe execution instructions.
+GitHub Actions workflows validate the AI application lab, infrastructure examples, AI red-team catalogue, enterprise AI policy engine, and hands-on AI agent lab policy tests. The AI Red Team Automation Framework runs a local deterministic mock suite, verifies that intentionally vulnerable control profiles are detected, and executes unit tests. The Enterprise AI Security Threat Detection Platform validates synthetic telemetry, applies versioned detection rules, generates risk-ranked reports, includes a local interactive dashboard and SOC console, normalizes synthetic EKS runtime signals, and runs detection, SOC lifecycle, and adapter integration tests. See each project README for prerequisites and safe execution instructions.
 
 ## Disclaimer
 
