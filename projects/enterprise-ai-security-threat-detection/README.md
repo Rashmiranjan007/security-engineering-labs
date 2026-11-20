@@ -13,6 +13,7 @@ This project is the enterprise operating layer for the repository's focused labs
 - JSON evidence output and Markdown executive/operations report
 - Governance model, ownership, escalation, and response playbook
 - Local SOC simulation with synthetic ingestion, alert correlation, incident lifecycle, audit trail, and playbooks
+- EKS runtime telemetry adapter, six Kubernetes/runtime detection rules, and end-to-end SOC integration tests
 - Unit tests and GitHub Actions validation
 
 ## Architecture
@@ -72,6 +73,10 @@ A dependency-free browser dashboard provides incident KPIs, severity distributio
 
 A loopback-only SOC console adds simulated telemetry ingestion, workload/actor/time-window correlation, incident ownership, an audited lifecycle, and event-specific response playbooks. See [SOC lab instructions](soc-lab/README.md). Start it with `python soc-lab/server.py` from this project directory. The service is bound to localhost and is not a production integration.
 
+## EKS runtime-to-SOC integration
+
+The [EKS runtime simulation](eks-runtime-simulation/README.md) normalizes synthetic Kubernetes audit, admission, workload identity, NetworkPolicy drift, image-integrity, and runtime-sensor signals into the SOC event schema. It feeds the same local API and detection rules, creating incidents and response playbooks. This is a local simulation only; it does not connect to AWS, EKS, or a runtime security vendor.
+
 ## Risk scoring
 
 Each matched event receives a severity and a configurable risk score from the rule catalogue. The aggregate score is capped at 100 for dashboard presentation. This is a prioritization aid, not a probability of compromise or a compliance score. Tune weights against business impact, exposure, exploitability, and asset criticality before production use.
@@ -83,7 +88,7 @@ A real deployment would require authenticated telemetry ingestion, schema valida
 ## Safety and limitations
 
 - This implementation reads local JSON files and generates local reports only.
-- It does not connect to an LLM, cloud account, SIEM, registry, cluster, or external endpoint.
+- It does not connect to an LLM, cloud account, SIEM, registry, cluster, or external endpoint. The EKS adapter uses synthetic fixtures and sends only to the loopback SOC API.
 - All event data is synthetic. No credentials, personal data, or employer telemetry should be committed.
 - Detection rules are deterministic examples, not a complete AI threat detector.
 - A clean report does not prove that an AI system is secure.
