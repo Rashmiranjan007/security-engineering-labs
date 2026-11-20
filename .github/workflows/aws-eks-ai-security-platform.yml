@@ -1,0 +1,37 @@
+name: AWS EKS AI Security Platform
+
+on:
+  push:
+    paths:
+      - "projects/aws-eks-ai-security-platform/**"
+      - ".github/workflows/aws-eks-ai-security-platform.yml"
+  pull_request:
+    paths:
+      - "projects/aws-eks-ai-security-platform/**"
+      - ".github/workflows/aws-eks-ai-security-platform.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.9.8"
+      - name: Terraform formatting
+        run: terraform -chdir=projects/aws-eks-ai-security-platform/terraform fmt -check -recursive
+      - name: Static security validation
+        run: python projects/aws-eks-ai-security-platform/tools/validate.py
+      - name: Unit tests
+        run: python -m unittest discover -s projects/aws-eks-ai-security-platform/tests -v
+      # No terraform init/plan/apply: CI has no AWS credentials and cannot provision resources.
