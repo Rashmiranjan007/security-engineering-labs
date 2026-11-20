@@ -28,7 +28,7 @@ Synthetic test catalogue (JSON)
           +------> Markdown summary
 ```
 
-## Run
+## How to run
 
 Python 3.10+; standard library only.
 
