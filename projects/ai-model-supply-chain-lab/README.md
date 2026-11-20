@@ -13,7 +13,7 @@ A defensive, offline lab for validating model artifacts before promotion into an
 ## Flow
 Model publisher / upstream source -> quarantine download -> hash and provenance capture -> security/license review -> approval -> offline verification -> controlled model registry promotion -> deployment pipeline.
 
-## Run
+## How to run
 Python 3.10+; standard library only:
 
     python -m unittest discover -s projects/ai-model-supply-chain-lab/tests -v
