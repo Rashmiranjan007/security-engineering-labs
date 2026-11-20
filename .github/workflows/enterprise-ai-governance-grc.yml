@@ -39,3 +39,18 @@ jobs:
         run: |
           test -s projects/enterprise-ai-governance-grc/dashboard/index.html
           test -s projects/enterprise-ai-governance-grc/governance/ai-governance-policy.md
+
+      - name: Validate continuous-compliance source contracts
+        run: |
+          python -m json.tool projects/enterprise-ai-governance-grc/continuous-compliance/data/source-findings.json >/dev/null
+          python -m json.tool projects/enterprise-ai-governance-grc/continuous-compliance/data/control-mappings.json >/dev/null
+      - name: Run continuous-compliance unit tests
+        run: python -m unittest discover -s projects/enterprise-ai-governance-grc/continuous-compliance/tests -v
+      - name: Generate continuous-compliance report
+        run: |
+          cd projects/enterprise-ai-governance-grc/continuous-compliance
+          python tools/compliance_pipeline.py --sources data/source-findings.json --rules data/control-mappings.json --controls ../data/control-catalogue.json --output-dir /tmp/continuous-compliance-report
+          test -s /tmp/continuous-compliance-report/latest.json
+          test -s /tmp/continuous-compliance-report/latest.md
+      - name: Validate continuous-compliance dashboard
+        run: test -s projects/enterprise-ai-governance-grc/continuous-compliance/dashboard/index.html
