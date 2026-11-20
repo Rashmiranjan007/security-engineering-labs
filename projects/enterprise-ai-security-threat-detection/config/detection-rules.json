@@ -1,0 +1,67 @@
+[
+  {
+    "rule_id": "AI-DET-001",
+    "event_type": "prompt_injection",
+    "severity": "high",
+    "risk_score": 7,
+    "framework_refs": [
+      "OWASP-LLM Prompt Injection"
+    ],
+    "recommendation": "Review untrusted input and retrieved context; verify instruction hierarchy and isolation controls."
+  },
+  {
+    "rule_id": "AI-DET-002",
+    "event_type": "cross_tenant_retrieval",
+    "severity": "critical",
+    "risk_score": 10,
+    "framework_refs": [
+      "OWASP-LLM Sensitive Information Disclosure",
+      "Tenant Isolation"
+    ],
+    "recommendation": "Block the retrieval path, contain the session, and investigate tenant authorization enforcement."
+  },
+  {
+    "rule_id": "AI-DET-003",
+    "event_type": "unauthorized_tool_call",
+    "severity": "critical",
+    "risk_score": 10,
+    "framework_refs": [
+      "OWASP-LLM Excessive Agency",
+      "Least Privilege"
+    ],
+    "recommendation": "Deny the tool action and investigate user, resource, and approval authorization independently."
+  },
+  {
+    "rule_id": "AI-DET-004",
+    "event_type": "sensitive_output",
+    "severity": "high",
+    "risk_score": 8,
+    "framework_refs": [
+      "OWASP-LLM Sensitive Information Disclosure",
+      "Data Protection"
+    ],
+    "recommendation": "Suppress the response, assess exposure, and rotate any real credential that may have escaped."
+  },
+  {
+    "rule_id": "AI-DET-005",
+    "event_type": "model_integrity_failure",
+    "severity": "critical",
+    "risk_score": 10,
+    "framework_refs": [
+      "AI Model Supply Chain",
+      "Artifact Integrity"
+    ],
+    "recommendation": "Quarantine the model artifact or deployment and verify digest, signature, provenance, and promotion approval."
+  },
+  {
+    "rule_id": "AI-DET-006",
+    "event_type": "policy_drift",
+    "severity": "medium",
+    "risk_score": 5,
+    "framework_refs": [
+      "Configuration Management",
+      "Policy as Code"
+    ],
+    "recommendation": "Compare the deployed policy version with the approved baseline and restore or approve the change."
+  }
+]
