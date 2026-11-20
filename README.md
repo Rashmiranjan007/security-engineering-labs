@@ -12,6 +12,7 @@ I am a Principal Information Security Engineer with 12+ years of experience acro
 |---|---|---|
 | [Cloud Security Posture](projects/cloud-security-posture/README.md) | AWS security foundations and Terraform IaC controls | Private S3 baseline, architecture, threat model, operating checklist |
 | [Kubernetes Security](projects/kubernetes-security/README.md) | Workload hardening and cluster guardrails | Restricted namespace, hardened deployment, default-deny network policy, Kyverno validation example, security baseline |
+| [Kubernetes AI Workload Security](projects/kubernetes-ai-workload-security/README.md) | Secure AI model-serving workloads on Kubernetes/EKS | GPU isolation, workload identity, model supply-chain controls, NetworkPolicy, Kyverno admission policy, validation tests |
 | [AI Security](projects/ai-security/README.md) | Identity-aware AI/RAG application security | JWT identity, role authorization, tenant-filtered retrieval, security telemetry, API tests |
 | [AI Red Team Toolkit](projects/ai-red-team-toolkit/README.md) | Structured, authorized AI security testing | Test methodology, OWASP-aligned synthetic test catalogue, catalogue validator |
 | [Enterprise AI Security Architecture](projects/enterprise-ai-security-architecture/README.md) | Enterprise LLM and agent security | Architecture, threat model, RAG/identity/data controls, tool authorization policy tests |
