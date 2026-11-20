@@ -25,15 +25,21 @@ export JWT_SECRET="$(python -c 'import secrets; print(secrets.token_urlsafe(48))
 python -m unittest discover -s tests -v
 ```
 
-Start the API in one terminal:
+Create one temporary local secret and use the exact same value in both terminals. For example, generate it once with `python -c 'import secrets; print(secrets.token_urlsafe(48))'` and copy the output. Do not commit it.
+
+**Terminal 1 — start the API** (from the project directory):
 
 ```bash
+cd projects/ai-security
+export JWT_SECRET="PASTE_THE_SAME_LOCAL_SECRET_HERE"
 uvicorn app.main:app --reload
 ```
 
-Mint a five-minute synthetic user token in another terminal (same `JWT_SECRET`):
+**Terminal 2 — mint a five-minute synthetic user token** (from the repository root):
 
 ```bash
+cd projects/ai-security
+export JWT_SECRET="PASTE_THE_SAME_LOCAL_SECRET_HERE"
 python scripts/mint_demo_token.py --tenant tenant-a --user analyst-1 --role user
 ```
 
