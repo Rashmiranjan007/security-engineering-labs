@@ -7,6 +7,10 @@ HERE = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(HERE))
 from adapter import normalize_batch, normalize_event
 from simulate import ensure_loopback
+from detector import detect
+
+PROJECT = HERE.parent
+sys.path.insert(0, str(PROJECT))
 
 
 class EKSAdapterTests(unittest.TestCase):
@@ -19,6 +23,14 @@ class EKSAdapterTests(unittest.TestCase):
         self.assertEqual(normalized[0]["event_id"], "test-run-eks-audit-2001")
         self.assertEqual(normalized[0]["event_type"], "k8s_exec_into_ai_pod")
         self.assertEqual(normalized[0]["details"]["cluster"], "eks-ai-prod-01")
+
+    def test_normalized_eks_events_create_soc_detections(self):
+        normalized = normalize_batch(self.events, "soc-test")
+        rules = json.loads((PROJECT / "config" / "detection-rules.json").read_text(encoding="utf-8"))
+        incidents = detect(normalized, rules)
+        self.assertEqual(len(incidents), 6)
+        self.assertEqual({item["event_type"] for item in incidents}, {item["signal_type"] for item in self.events})
+        self.assertEqual(sum(item["severity"] == "critical" for item in incidents), 4)
 
     def test_rejects_unknown_signal(self):
         event = dict(self.events[0], signal_type="unknown_signal")
