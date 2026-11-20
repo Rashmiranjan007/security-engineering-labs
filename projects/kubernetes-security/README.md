@@ -7,7 +7,7 @@ Practical baseline examples for Kubernetes and EKS workloads.
 - Hardened non-root Deployment with seccomp, dropped capabilities, read-only root filesystem, resource limits, and disabled service-account token mounting
 - Default-deny ingress and egress NetworkPolicy
 
-## Validate in a disposable lab cluster
+## How to run
 Requires kubectl and a cluster with a compatible CNI that enforces NetworkPolicy.
 
 ```bash
