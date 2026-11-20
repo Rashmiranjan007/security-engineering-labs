@@ -33,7 +33,7 @@ This is a fictional reference framework. It does not represent an employer or cu
 - [Catalogue validator](tools/validate_catalogue.py)
 - [Validator unit tests](tools/test_validate_catalogue.py)
 
-## Quick start
+## How to run
 
 Requires Python 3.10+ and the standard library.
 
