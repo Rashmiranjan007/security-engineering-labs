@@ -2,7 +2,7 @@
 
 A loopback-only, synthetic SOC simulation that extends the detection engine with event ingestion, alert correlation, incident ownership, a controlled lifecycle, an audit trail, and response playbooks.
 
-## Start
+## How to run
 
 From this directory:
 
