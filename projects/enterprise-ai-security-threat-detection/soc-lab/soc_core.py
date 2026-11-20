@@ -70,12 +70,14 @@ def update_incident(state, incident_id, update, actor="soc-analyst", at=None):
         raise KeyError("Incident not found")
     if not isinstance(update, dict):
         raise ValueError("Update must be an object")
+    if not isinstance(actor, str) or not actor.strip() or len(actor) > 100:
+        raise ValueError("Actor must be a non-empty string of at most 100 characters")
     timestamp = at or datetime.now(timezone.utc).isoformat()
     changed = False
 
     if "status" in update:
         target = update["status"]
-        if target not in VALID_STATUSES:
+        if not isinstance(target, str) or target not in VALID_STATUSES:
             raise ValueError("Invalid incident status")
         current = incident["status"]
         if target not in TRANSITIONS[current]:
