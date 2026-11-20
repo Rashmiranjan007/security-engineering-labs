@@ -30,3 +30,9 @@ jobs:
       - name: Generate sample threat report
         working-directory: Threat-Modeling/enterprise-cloud-ai-platform/automation
         run: python stride_engine.py --input sample-architecture.json --output generated-threats.json
+      - name: Test attack path analysis engine
+        working-directory: Threat-Modeling/enterprise-cloud-ai-platform/automation
+        run: python -m unittest test_attack_path_engine.py -v
+      - name: Generate sample attack path report
+        working-directory: Threat-Modeling/enterprise-cloud-ai-platform/automation
+        run: python attack_path_engine.py --input sample-attack-graph.json --output attack-path-report.json
