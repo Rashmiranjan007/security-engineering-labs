@@ -90,6 +90,25 @@ python -m unittest -v
 
 The engine is deterministic decision support, not a vulnerability scanner. A rule trigger is a review prompt, not proof of exploitability. Human review remains mandatory; generated findings are never automatically accepted or closed.
 
+## Automated attack path analysis
+
+A graph-based engine connects architecture relationships and modeled weaknesses into candidate attack chains, then ranks them using a transparent cumulative likelihood × impact heuristic. It includes a fictional sample graph, unit tests, business-impact context, and suggested control break-points.
+
+- [Attack path analysis guide](automation/ATTACK_PATH_ANALYSIS.md)
+- [Attack path engine](automation/attack_path_engine.py)
+- [Sample attack graph](automation/sample-attack-graph.json)
+- [Attack path engine unit tests](automation/test_attack_path_engine.py)
+
+Run locally:
+
+```bash
+cd Threat-Modeling/enterprise-cloud-ai-platform/automation
+python attack_path_engine.py --input sample-attack-graph.json --output attack-path-report.json
+python -m unittest -v
+```
+
+The score is a prioritization heuristic, not a probability or exploitability verdict. Validate every candidate chain with architecture owners and supporting evidence.
+
 ## Repository map
 
 | Path | Purpose |
@@ -99,7 +118,7 @@ The engine is deterministic decision support, not a vulnerability scanner. A rul
 | `controls/` | Security requirements and control-to-threat traceability |
 | `governance/` | Risk methodology, RACI, review lifecycle, exception process |
 | `scenarios/` | Abuse cases and validation exercises |
-| `automation/` | Rules-based STRIDE threat identification engine, sample input, and tests |
+| `automation/` | STRIDE identification and graph-based attack path engines, sample inputs, guides, and tests |
 | `tools/` | Risk scoring utility and unit tests |
 
 ## How to use this project
