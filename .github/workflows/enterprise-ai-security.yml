@@ -1,0 +1,29 @@
+name: Enterprise AI Security Architecture Tests
+
+on:
+  pull_request:
+    paths:
+      - "projects/enterprise-ai-security-architecture/**"
+      - ".github/workflows/enterprise-ai-security.yml"
+  push:
+    paths:
+      - "projects/enterprise-ai-security-architecture/**"
+      - ".github/workflows/enterprise-ai-security.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  policy-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: projects/enterprise-ai-security-architecture
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run tool authorization policy tests
+        run: python -m unittest discover -s tests -v
