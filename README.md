@@ -15,6 +15,7 @@ I am a Principal Information Security Engineer with 12+ years of experience acro
 | [AI Security](projects/ai-security/README.md) | Identity-aware AI/RAG application security | JWT identity, role authorization, tenant-filtered retrieval, security telemetry, API tests |
 | [AI Red Team Toolkit](projects/ai-red-team-toolkit/README.md) | Structured, authorized AI security testing | Test methodology, OWASP-aligned synthetic test catalogue, catalogue validator |
 | [Enterprise AI Security Architecture](projects/enterprise-ai-security-architecture/README.md) | Enterprise LLM and agent security | Architecture, threat model, RAG/identity/data controls, tool authorization policy tests |
+| [Hands-on AI Agent Security Lab](projects/ai-agent-security-lab/README.md) | Runnable local LLM + RAG + agent-tool security lab | Ollama, Qdrant, FastAPI, tenant ACLs, server-side tool policy, Docker Compose |
 
 ## Engineering approach
 
@@ -47,7 +48,7 @@ projects/
 
 ## Validation
 
-GitHub Actions workflows validate the AI application lab and infrastructure examples. The AI red-team catalogue has a local schema/quality validator. See each project README for prerequisites and safe execution instructions.
+GitHub Actions workflows validate the AI application lab, infrastructure examples, AI red-team catalogue, enterprise AI policy engine, and hands-on AI agent lab policy tests. See each project README for prerequisites and safe execution instructions.
 
 ## Disclaimer
 
