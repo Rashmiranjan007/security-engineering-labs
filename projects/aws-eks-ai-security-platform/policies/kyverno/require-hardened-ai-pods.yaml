@@ -1,0 +1,43 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-hardened-ai-inference-pods
+  annotations:
+    policies.kyverno.io/title: Require hardened AI inference pods
+    policies.kyverno.io/category: EKS Workload Security
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+    - name: require-image-digest
+      match:
+        any:
+          - resources:
+              kinds: [Pod]
+              namespaces: [ai-inference]
+      validate:
+        message: "AI inference images must be pinned by immutable sha256 digest."
+        pattern:
+          spec:
+            containers:
+              - image: "*@sha256:*"
+    - name: require-pod-security-context
+      match:
+        any:
+          - resources:
+              kinds: [Pod]
+              namespaces: [ai-inference]
+      validate:
+        message: "AI inference pods must run non-root with RuntimeDefault seccomp."
+        pattern:
+          spec:
+            securityContext:
+              runAsNonRoot: true
+              seccompProfile:
+                type: RuntimeDefault
+            containers:
+              - securityContext:
+                  allowPrivilegeEscalation: false
+                  readOnlyRootFilesystem: true
+                  capabilities:
+                    drop: [ALL]
