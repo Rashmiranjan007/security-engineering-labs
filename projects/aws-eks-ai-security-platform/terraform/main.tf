@@ -4,21 +4,21 @@ data "aws_availability_zones" "available" {
 
 locals {
   availability_zones = slice(data.aws_availability_zones.available.names, 0, 2)
-  oidc_issuer         = aws_eks_cluster.this.identity[0].oidc[0].issuer
-  oidc_hostpath       = replace(local.oidc_issuer, "https://", "")
-  inference_subject   = "system:serviceaccount:ai-inference:ai-inference-sa"
+  oidc_issuer        = aws_eks_cluster.this.identity[0].oidc[0].issuer
+  oidc_hostpath      = replace(local.oidc_issuer, "https://", "")
+  inference_subject  = "system:serviceaccount:ai-inference:ai-inference-sa"
 }
 
 resource "aws_vpc" "this" {
   cidr_block           = var.vpc_cidr
   enable_dns_support   = true
   enable_dns_hostnames = true
-  tags = { Name = "${var.cluster_name}-vpc" }
+  tags                 = { Name = "${var.cluster_name}-vpc" }
 }
 
 resource "aws_internet_gateway" "this" {
   vpc_id = aws_vpc.this.id
-  tags  = { Name = "${var.cluster_name}-igw" }
+  tags   = { Name = "${var.cluster_name}-igw" }
 }
 
 resource "aws_subnet" "public" {
@@ -28,8 +28,8 @@ resource "aws_subnet" "public" {
   availability_zone       = local.availability_zones[count.index]
   map_public_ip_on_launch = true
   tags = {
-    Name                                       = "${var.cluster_name}-public-${count.index + 1}"
-    "kubernetes.io/role/elb"                   = "1"
+    Name                                        = "${var.cluster_name}-public-${count.index + 1}"
+    "kubernetes.io/role/elb"                    = "1"
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"
   }
 }
@@ -48,9 +48,9 @@ resource "aws_subnet" "private" {
 }
 
 resource "aws_eip" "nat" {
-  domain = "vpc"
+  domain     = "vpc"
   depends_on = [aws_internet_gateway.this]
-  tags = { Name = "${var.cluster_name}-nat-eip" }
+  tags       = { Name = "${var.cluster_name}-nat-eip" }
 }
 
 resource "aws_nat_gateway" "this" {
@@ -108,9 +108,9 @@ resource "aws_iam_role" "cluster" {
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
-      Effect = "Allow"
+      Effect    = "Allow"
       Principal = { Service = "eks.amazonaws.com" }
-      Action = "sts:AssumeRole"
+      Action    = "sts:AssumeRole"
     }]
   })
 }
@@ -157,9 +157,9 @@ resource "aws_iam_role" "nodes" {
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
-      Effect = "Allow"
+      Effect    = "Allow"
       Principal = { Service = "ec2.amazonaws.com" }
-      Action = "sts:AssumeRole"
+      Action    = "sts:AssumeRole"
     }]
   })
 }
@@ -237,9 +237,9 @@ resource "aws_iam_role" "ai_inference" {
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
-      Effect = "Allow"
+      Effect    = "Allow"
       Principal = { Federated = aws_iam_openid_connect_provider.eks.arn }
-      Action = "sts:AssumeRoleWithWebIdentity"
+      Action    = "sts:AssumeRoleWithWebIdentity"
       Condition = {
         StringEquals = {
           "${local.oidc_hostpath}:aud" = "sts.amazonaws.com"
