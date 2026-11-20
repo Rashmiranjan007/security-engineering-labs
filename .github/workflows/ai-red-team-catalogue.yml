@@ -1,0 +1,31 @@
+name: AI Red Team Catalogue Validation
+
+on:
+  pull_request:
+    paths:
+      - "projects/ai-red-team-toolkit/**"
+      - ".github/workflows/ai-red-team-catalogue.yml"
+  push:
+    paths:
+      - "projects/ai-red-team-toolkit/**"
+      - ".github/workflows/ai-red-team-catalogue.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-catalogue:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: projects/ai-red-team-toolkit
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate AI security test catalogue
+        run: python validate_cases.py
+      - name: Run catalogue unit tests
+        run: python -m unittest -v
