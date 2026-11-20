@@ -59,21 +59,34 @@ class Handler(BaseHTTPRequestHandler):
             raise ValueError("Request body must be valid JSON")
 
     def do_GET(self):
-        if self.path == "/api/state":
+        if self.path in ("/", "/index.html"):
+            body = (HERE / "index.html").read_bytes()
+            self.send_response(200)
+            self.send_header("Content-Type", "text/html; charset=utf-8")
+            self.send_header("Content-Length", str(len(body)))
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+            self.wfile.write(body)
+        elif self.path == "/api/state":
             with LOCK:
                 self._send(200, load_state())
+        elif self.path == "/api/playbooks":
+            self._send(200, json.loads((HERE / "playbooks.json").read_text(encoding="utf-8")))
         elif self.path == "/api/health":
             self._send(200, {"status": "ok", "mode": "synthetic-local-only"})
         else:
             self._send(404, {"error": "Not found"})
 
     def do_POST(self):
-        if self.path != "/api/events":
+        if self.path not in ("/api/events", "/api/demo-ingest"):
             self._send(404, {"error": "Not found"})
             return
         try:
-            payload = self._body()
-            events = payload if isinstance(payload, list) else [payload]
+            if self.path == "/api/demo-ingest":
+                events = json.loads((PROJECT / "scenarios" / "sample-events.json").read_text(encoding="utf-8"))
+            else:
+                payload = self._body()
+                events = payload if isinstance(payload, list) else [payload]
             with LOCK:
                 state = load_state()
                 result = ingest(state, events, load_rules())
