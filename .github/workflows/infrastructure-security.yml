@@ -1,0 +1,53 @@
+name: Infrastructure Security Checks
+
+on:
+  pull_request:
+    paths:
+      - "projects/cloud-security-posture/**"
+      - "projects/kubernetes-security/**"
+      - ".github/workflows/infrastructure-security.yml"
+  push:
+    paths:
+      - "projects/cloud-security-posture/**"
+      - "projects/kubernetes-security/**"
+      - ".github/workflows/infrastructure-security.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.8.5"
+      - name: Terraform format
+        working-directory: projects/cloud-security-posture/terraform/secure
+        run: terraform fmt -check -recursive
+      - name: Terraform init
+        working-directory: projects/cloud-security-posture/terraform/secure
+        run: terraform init -backend=false
+      - name: Terraform validate
+        working-directory: projects/cloud-security-posture/terraform/secure
+        run: terraform validate
+
+  kubernetes-manifest-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate YAML syntax
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          try:
+              import yaml
+          except ImportError:
+              raise SystemExit("PyYAML is required for this validation step")
+          files = list(Path("projects/kubernetes-security/manifests").glob("*.yaml"))
+          for path in files:
+              list(yaml.safe_load_all(path.read_text()))
+              print(f"Parsed {path}")
+          PY
