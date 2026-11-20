@@ -29,7 +29,7 @@ jobs:
         with:
           terraform_version: "1.9.8"
       - name: Terraform formatting
-        run: terraform -chdir=projects/aws-eks-ai-security-platform/terraform fmt -check -recursive
+        run: terraform -chdir=projects/aws-eks-ai-security-platform/terraform fmt -check -diff -recursive
       - name: Static security validation
         run: python projects/aws-eks-ai-security-platform/tools/validate.py
       - name: Unit tests
