@@ -30,7 +30,7 @@ flowchart TD
   API --> AUDIT[Structured Security Events]
 ```
 
-## Start locally
+## How to run
 
 Prerequisites: Docker Compose and sufficient memory for the selected local model.
 
