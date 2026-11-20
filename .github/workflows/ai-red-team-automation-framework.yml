@@ -1,0 +1,39 @@
+name: AI Red Team Automation Framework
+
+on:
+  push:
+    paths:
+      - 'projects/ai-red-team-automation-framework/**'
+      - '.github/workflows/ai-red-team-automation-framework.yml'
+  pull_request:
+    paths:
+      - 'projects/ai-red-team-automation-framework/**'
+      - '.github/workflows/ai-red-team-automation-framework.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run secure mock profile
+        working-directory: projects/ai-red-team-automation-framework
+        run: python runner.py
+      - name: Verify vulnerable profile is detected
+        working-directory: projects/ai-red-team-automation-framework
+        run: |
+          if python runner.py --profile intentionally-vulnerable; then
+            echo "Expected the intentionally vulnerable profile to fail."
+            exit 1
+          else
+            echo "Expected control gaps were detected."
+          fi
+      - name: Run unit tests
+        working-directory: projects/ai-red-team-automation-framework
+        run: python -m unittest discover -s tests -v
