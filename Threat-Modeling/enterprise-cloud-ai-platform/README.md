@@ -71,6 +71,25 @@ Residual risk is scored only after control design and operating evidence are rev
 - **AI/RAG:** tenant-aware retrieval, source authorization, prompt-injection defenses, tool allowlists, output validation, sensitive-data filtering, model and prompt versioning, abuse monitoring.
 - **Detection:** centralized immutable audit events, correlation IDs, cloud control-plane logs, Kubernetes audit/runtime events, API security signals, AI abuse signals, alert ownership and response runbooks.
 
+## Automated STRIDE threat identification
+
+A new rules-based engine converts a structured architecture inventory into candidate STRIDE threats. It evaluates component properties and data-flow properties, then emits findings with stable rule IDs, affected assets, rationale, suggested controls, and an initial risk score.
+
+- [Automation guide and execution instructions](automation/README.md)
+- [Sample architecture inventory](automation/sample-architecture.json)
+- [STRIDE engine](automation/stride_engine.py)
+- [Engine unit tests](automation/test_stride_engine.py)
+
+Run locally:
+
+```bash
+cd Threat-Modeling/enterprise-cloud-ai-platform/automation
+python stride_engine.py --input sample-architecture.json --output generated-threats.json
+python -m unittest -v
+```
+
+The engine is deterministic decision support, not a vulnerability scanner. A rule trigger is a review prompt, not proof of exploitability. Human review remains mandatory; generated findings are never automatically accepted or closed.
+
 ## Repository map
 
 | Path | Purpose |
@@ -80,10 +99,12 @@ Residual risk is scored only after control design and operating evidence are rev
 | `controls/` | Security requirements and control-to-threat traceability |
 | `governance/` | Risk methodology, RACI, review lifecycle, exception process |
 | `scenarios/` | Abuse cases and validation exercises |
+| `automation/` | Rules-based STRIDE threat identification engine, sample input, and tests |
+| `tools/` | Risk scoring utility and unit tests |
 
 ## How to use this project
 
-Start with the context diagram, review the threat register, then trace each high-risk threat to a control and a verification test. Use the governance documents to run a design review. Treat all diagrams and sample scores as a worked example to be challenged—not as proof that a deployed system is secure.
+Start with the context diagram, review the threat register, then trace each high-risk threat to a control and a verification test. Run the STRIDE engine against the sample inventory and challenge its findings with service owners. Use the governance documents to run a design review. Treat all diagrams and sample scores as a worked example to be challenged—not as proof that a deployed system is secure.
 
 ## Disclaimer
 
