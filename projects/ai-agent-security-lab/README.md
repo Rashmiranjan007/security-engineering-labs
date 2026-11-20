@@ -32,9 +32,10 @@ flowchart TD
 
 ## How to run
 
-Prerequisites: Docker Compose and sufficient memory for the selected local model.
+Prerequisites: Docker Compose, Python 3.10+, and sufficient memory for the selected local model. Run all commands from the repository root unless a command changes directory.
 
 ```bash
+cd projects/ai-agent-security-lab
 docker compose up -d
 docker compose exec ollama ollama pull llama3.2:3b
 docker compose exec ollama ollama pull nomic-embed-text
@@ -44,7 +45,7 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
 
-Windows PowerShell activation: `.venv\\Scripts\\Activate.ps1`.
+Keep the API process running. In a second terminal, change to `projects/ai-agent-security-lab` again before running the curl examples below. Docker Compose services must remain running. Windows PowerShell activation: `.venv\\Scripts\\Activate.ps1`.
 
 API health check: `GET http://localhost:8000/health`.
 
