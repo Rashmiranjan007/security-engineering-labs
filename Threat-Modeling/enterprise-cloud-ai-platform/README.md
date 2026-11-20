@@ -109,6 +109,28 @@ python -m unittest -v
 
 The score is a prioritization heuristic, not a probability or exploitability verdict. Validate every candidate chain with architecture owners and supporting evidence.
 
+## How to run
+
+Requires Python 3.10+; the risk, STRIDE and attack-path utilities use the standard library.
+
+From the repository root:
+
+~~~bash
+cd Threat-Modeling/enterprise-cloud-ai-platform/automation
+python stride_engine.py --input sample-architecture.json --output generated-threats.json
+python attack_path_engine.py --input sample-attack-graph.json --output attack-path-report.json
+python -m unittest -v
+~~~
+
+Run risk-engine tests:
+
+~~~bash
+cd Threat-Modeling/enterprise-cloud-ai-platform
+python -m unittest discover -s tools -v
+~~~
+
+Review generated findings with architecture owners. Outputs are candidate analysis from fictional examples, not proof of vulnerabilities.
+
 ## Repository map
 
 | Path | Purpose |
