@@ -1,39 +1,53 @@
 # Security Engineering Labs
 
-A public, hands-on portfolio of cloud security, Kubernetes security, AI security, and AI red-team engineering projects.
+A practical portfolio of cloud security, Kubernetes security, DevSecOps, AI application security, and defensive AI red-team engineering.
 
 ## About
 
-I am a Principal Information Security Engineer focused on cloud security, container and Kubernetes security, DevSecOps, product security, vulnerability management, and AI security. My work spans AWS and GCP environments, Kubernetes/EKS, infrastructure as code, CI/CD security, runtime protection, and security automation.
+I am a Principal Information Security Engineer with 12+ years of experience across cloud security, container and Kubernetes security, product security, vulnerability management, DevSecOps, and emerging AI security. This repository contains independent learning projects, reference implementations, architecture notes, and security validation examples.
 
-## Portfolio projects
+## Portfolio
 
-| Project | Focus | Planned implementation |
+| Project | What it demonstrates | Current assets |
 |---|---|---|
-| [Cloud Security Posture](projects/cloud-security-posture/README.md) | AWS IAM, S3, Terraform | Secure-by-default infrastructure examples, policy checks, threat scenarios, and remediation guidance |
-| [Kubernetes Security](projects/kubernetes-security/README.md) | EKS, admission control, container hardening | Workload security baseline, admission policies, image controls, runtime considerations, and validation |
-| [AI Security](projects/ai-security/README.md) | Prompt injection, RAG, model and API security | Threat model, attack/defense labs, secure architecture, and evaluation tests |
-| [AI Red Team Toolkit](projects/ai-red-team-toolkit/README.md) | LLM application testing | Repeatable tests for OWASP LLM risks, reporting, and CI integration |
+| [Cloud Security Posture](projects/cloud-security-posture/README.md) | AWS security foundations and Terraform IaC controls | Private S3 baseline, architecture, threat model, operating checklist |
+| [Kubernetes Security](projects/kubernetes-security/README.md) | Workload hardening and cluster guardrails | Restricted namespace, hardened deployment, default-deny network policy, Kyverno validation example, security baseline |
+| [AI Security](projects/ai-security/README.md) | Identity-aware AI/RAG application security | JWT identity, role authorization, tenant-filtered retrieval, security telemetry, API tests |
+| [AI Red Team Toolkit](projects/ai-red-team-toolkit/README.md) | Structured, authorized AI security testing | Test methodology, OWASP-aligned synthetic test catalogue, catalogue validator |
 
-## Engineering principles
+## Engineering approach
 
-- Demonstrate risks only in isolated, intentionally vulnerable lab environments.
-- Prefer reproducible tests, clear threat models, and actionable remediation.
-- Never commit credentials, tokens, customer data, or proprietary company material.
-- Keep examples vendor-neutral unless a project explicitly documents a product integration.
+- Threat-model trust boundaries, assets, abuse cases, and residual risk.
+- Enforce authorization in trusted application and infrastructure layers.
+- Prefer reproducible tests, secure defaults, policy-as-code, and clear remediation guidance.
+- Use synthetic data and isolated environments for security testing.
+- Document limitations; a passing lab test is not proof of production security.
 
 ## Repository structure
 
 ```text
 projects/
   cloud-security-posture/
+    terraform/secure/
+    docs/
   kubernetes-security/
+    manifests/
+    policies/kyverno/
+    docs/
   ai-security/
+    app/
+    tests/
+    docs/
   ai-red-team-toolkit/
+    test-cases/
+    docs/
 .github/workflows/
-docs/
 ```
+
+## Validation
+
+GitHub Actions workflows validate the AI application lab and infrastructure examples. The AI red-team catalogue has a local schema/quality validator. See each project README for prerequisites and safe execution instructions.
 
 ## Disclaimer
 
-These projects are for education and defensive security engineering. Use the labs only on systems you own or are explicitly authorized to test.
+These are independent portfolio and educational projects. They are not representations of employer-owned systems, proprietary architecture, or production certifications. Use the labs only on systems you own or are explicitly authorized to assess.
