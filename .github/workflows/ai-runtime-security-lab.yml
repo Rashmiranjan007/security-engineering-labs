@@ -1,0 +1,29 @@
+name: AI runtime security lab
+
+on:
+  push:
+    paths:
+      - "projects/ai-runtime-security-lab/**"
+      - ".github/workflows/ai-runtime-security-lab.yml"
+  pull_request:
+    paths:
+      - "projects/ai-runtime-security-lab/**"
+      - ".github/workflows/ai-runtime-security-lab.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  runtime-guard-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run runtime guard unit tests
+        working-directory: projects/ai-runtime-security-lab
+        run: python -m unittest discover -s tests -v
+      - name: Generate synthetic runtime security report
+        working-directory: projects/ai-runtime-security-lab
+        run: python runtime_guard.py --input scenarios/runtime-events.json --output runtime-report.json
