@@ -1,26 +1,122 @@
 {
   "prompt_injection": {
     "title": "Prompt injection investigation",
-    "steps": ["Preserve prompt and retrieved-context evidence with sensitive values redacted.", "Identify the untrusted instruction source and affected conversation/session.", "Verify system/developer instruction separation and retrieval trust boundaries.", "Block or isolate the affected session if policy bypass is confirmed.", "Add regression cases and validate the fix before closure."]
+    "steps": [
+      "Preserve prompt and retrieved-context evidence with sensitive values redacted.",
+      "Identify the untrusted instruction source and affected conversation/session.",
+      "Verify system/developer instruction separation and retrieval trust boundaries.",
+      "Block or isolate the affected session if policy bypass is confirmed.",
+      "Add regression cases and validate the fix before closure."
+    ]
   },
   "cross_tenant_retrieval": {
     "title": "Cross-tenant retrieval containment",
-    "steps": ["Immediately disable or block the affected retrieval path.", "Preserve tenant IDs, caller identity, document reference, and authorization decision.", "Determine whether data was returned to an unauthorized tenant or only denied.", "Review vector-store filters, cache keys, service identity, and authorization enforcement.", "Require independent security validation before restoring service."]
+    "steps": [
+      "Immediately disable or block the affected retrieval path.",
+      "Preserve tenant IDs, caller identity, document reference, and authorization decision.",
+      "Determine whether data was returned to an unauthorized tenant or only denied.",
+      "Review vector-store filters, cache keys, service identity, and authorization enforcement.",
+      "Require independent security validation before restoring service."
+    ]
   },
   "unauthorized_tool_call": {
     "title": "Agent tool privilege misuse",
-    "steps": ["Deny the requested tool action and suspend the affected agent session if necessary.", "Preserve tool name, arguments metadata, actor, resource scope, and approval state.", "Review server-side authorization, least-privilege scopes, and human approval gates.", "Check for downstream changes using the system of record.", "Re-enable only after negative authorization tests pass."]
+    "steps": [
+      "Deny the requested tool action and suspend the affected agent session if necessary.",
+      "Preserve tool name, arguments metadata, actor, resource scope, and approval state.",
+      "Review server-side authorization, least-privilege scopes, and human approval gates.",
+      "Check for downstream changes using the system of record.",
+      "Re-enable only after negative authorization tests pass."
+    ]
   },
   "sensitive_output": {
     "title": "Sensitive output exposure",
-    "steps": ["Suppress further delivery and preserve a redacted evidence copy.", "Identify the data classification and whether the value is synthetic or real.", "If a real credential was exposed, rotate it through the approved secrets process.", "Review retrieval permissions, output filtering, and logging redaction.", "Validate with safe canary tests before closure."]
+    "steps": [
+      "Suppress further delivery and preserve a redacted evidence copy.",
+      "Identify the data classification and whether the value is synthetic or real.",
+      "If a real credential was exposed, rotate it through the approved secrets process.",
+      "Review retrieval permissions, output filtering, and logging redaction.",
+      "Validate with safe canary tests before closure."
+    ]
   },
   "model_integrity_failure": {
     "title": "Model artifact integrity failure",
-    "steps": ["Quarantine the artifact or deployment through the approved platform process.", "Compare observed digest with the approved immutable manifest.", "Verify signature, provenance attestation, source, and promotion approval.", "Review registry and deployment audit history for unauthorized changes.", "Promote a verified artifact and re-check integrity at deployment."]
+    "steps": [
+      "Quarantine the artifact or deployment through the approved platform process.",
+      "Compare observed digest with the approved immutable manifest.",
+      "Verify signature, provenance attestation, source, and promotion approval.",
+      "Review registry and deployment audit history for unauthorized changes.",
+      "Promote a verified artifact and re-check integrity at deployment."
+    ]
   },
   "policy_drift": {
     "title": "AI policy drift",
-    "steps": ["Identify the approved and observed policy versions and change window.", "Determine whether the drift is authorized, accidental, or malicious.", "Restore the approved baseline or obtain documented risk approval.", "Review deployment identity and policy change audit trail.", "Add drift detection and an owner for ongoing compliance."]
+    "steps": [
+      "Identify the approved and observed policy versions and change window.",
+      "Determine whether the drift is authorized, accidental, or malicious.",
+      "Restore the approved baseline or obtain documented risk approval.",
+      "Review deployment identity and policy change audit trail.",
+      "Add drift detection and an owner for ongoing compliance."
+    ]
+  },
+  "k8s_exec_into_ai_pod": {
+    "title": "Unexpected exec into AI workload",
+    "steps": [
+      "Validate the Kubernetes user, groups, service account, and source context from the audit record.",
+      "Confirm the change ticket and approved break-glass procedure.",
+      "Review pod process, namespace events, and subsequent API actions.",
+      "Revoke unexpected access and rotate any exposed credentials through approved procedures.",
+      "Add least-privilege RBAC and alert tuning tests before closure."
+    ]
+  },
+  "privileged_ai_workload": {
+    "title": "Privileged AI workload detected",
+    "steps": [
+      "Check whether admission policy should have denied the privileged pod.",
+      "Identify host namespaces, capabilities, hostPath mounts, and node placement.",
+      "Use the approved platform process to isolate or remove the workload if unauthorized.",
+      "Review node and neighboring workload activity for potential impact.",
+      "Correct the workload security context and enforce admission controls."
+    ]
+  },
+  "service_account_token_anomaly": {
+    "title": "Service account token anomaly",
+    "steps": [
+      "Identify service account, token audience, issuer, pod, and requesting identity.",
+      "Review Kubernetes audit and AWS CloudTrail records for unexpected token use.",
+      "Validate IRSA or EKS Pod Identity association and least-privilege IAM permissions.",
+      "Revoke or rotate affected identity credentials using approved platform procedures.",
+      "Review RBAC bindings and add detection coverage for abnormal token usage."
+    ]
+  },
+  "network_policy_drift": {
+    "title": "Kubernetes network policy drift",
+    "steps": [
+      "Compare the observed policy object with the approved GitOps or policy baseline.",
+      "Identify the actor, source, namespace, and change window.",
+      "Review new ingress and egress paths, especially model, vector-store, and metadata endpoints.",
+      "Restore the approved policy or document a time-bound exception with an accountable owner.",
+      "Add drift prevention and continuous policy validation."
+    ]
+  },
+  "container_image_digest_mismatch": {
+    "title": "Container image digest mismatch",
+    "steps": [
+      "Pause deployment promotion through the approved release process.",
+      "Compare the deployed digest with the signed and approved artifact metadata.",
+      "Validate registry, provenance, signature, build identity, and promotion approval.",
+      "Review deployment and registry audit trails for unauthorized changes.",
+      "Redeploy only a verified artifact and enforce digest pinning."
+    ]
+  },
+  "runtime_threat_detection": {
+    "title": "Container runtime threat detection",
+    "steps": [
+      "Preserve the alert ID, process ancestry, container ID, pod, node, and timestamp.",
+      "Validate detection fidelity and determine whether the behavior is expected or authorized.",
+      "Scope related pods, nodes, namespaces, and workload identities for matching activity.",
+      "Contain the affected workload using approved cluster response procedures if warranted.",
+      "Remediate the root cause, validate recovery, and document lessons learned."
+    ]
   }
 }
