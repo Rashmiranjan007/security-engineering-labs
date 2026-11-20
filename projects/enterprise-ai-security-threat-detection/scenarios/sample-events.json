@@ -1,0 +1,86 @@
+[
+  {
+    "event_id": "evt-1001",
+    "timestamp": "2026-11-20T10:00:00Z",
+    "event_type": "prompt_injection",
+    "workload": "claims-assistant",
+    "environment": "staging",
+    "actor": "user-ref-17",
+    "resource": "conversation-882",
+    "outcome": "detect",
+    "details": {
+      "source": "user_input",
+      "signal": "instruction_override_indicator"
+    }
+  },
+  {
+    "event_id": "evt-1002",
+    "timestamp": "2026-11-20T10:01:00Z",
+    "event_type": "cross_tenant_retrieval",
+    "workload": "knowledge-assistant",
+    "environment": "production",
+    "actor": "service-ref-3",
+    "resource": "document-ref-91",
+    "outcome": "deny",
+    "details": {
+      "caller_tenant": "tenant-blue",
+      "resource_tenant": "tenant-red"
+    }
+  },
+  {
+    "event_id": "evt-1003",
+    "timestamp": "2026-11-20T10:02:00Z",
+    "event_type": "unauthorized_tool_call",
+    "workload": "support-agent",
+    "environment": "production",
+    "actor": "agent-ref-8",
+    "resource": "delete_customer_record",
+    "outcome": "deny",
+    "details": {
+      "authorization": "resource_scope_missing",
+      "approval": "not_present"
+    }
+  },
+  {
+    "event_id": "evt-1004",
+    "timestamp": "2026-11-20T10:03:00Z",
+    "event_type": "sensitive_output",
+    "workload": "hr-assistant",
+    "environment": "staging",
+    "actor": "model-ref-2",
+    "resource": "response-ref-5",
+    "outcome": "blocked",
+    "details": {
+      "match_type": "synthetic_canary",
+      "redacted": true
+    }
+  },
+  {
+    "event_id": "evt-1005",
+    "timestamp": "2026-11-20T10:04:00Z",
+    "event_type": "model_integrity_failure",
+    "workload": "inference-prod",
+    "environment": "production",
+    "actor": "deployment-controller",
+    "resource": "model-v3.2",
+    "outcome": "deny",
+    "details": {
+      "expected_digest": "sha256:approved",
+      "observed_digest": "sha256:unexpected"
+    }
+  },
+  {
+    "event_id": "evt-1006",
+    "timestamp": "2026-11-20T10:05:00Z",
+    "event_type": "policy_drift",
+    "workload": "agent-runtime",
+    "environment": "production",
+    "actor": "policy-controller",
+    "resource": "agent-policy-v4",
+    "outcome": "detect",
+    "details": {
+      "approved_version": "v4",
+      "observed_version": "v3"
+    }
+  }
+]
