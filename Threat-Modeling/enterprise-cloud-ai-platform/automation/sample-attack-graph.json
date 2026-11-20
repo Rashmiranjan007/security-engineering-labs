@@ -1,0 +1,199 @@
+{
+  "schema_version": "1.0",
+  "name": "Fictional multi-tenant cloud and AI platform",
+  "entrypoints": [
+    "internet"
+  ],
+  "targets": [
+    "customer-db",
+    "production-cluster"
+  ],
+  "nodes": [
+    {
+      "id": "internet",
+      "type": "external",
+      "label": "Untrusted internet"
+    },
+    {
+      "id": "api-gateway",
+      "type": "service",
+      "label": "Public API gateway",
+      "weakness_ids": [
+        "W-API-AUTH"
+      ]
+    },
+    {
+      "id": "tenant-api",
+      "type": "service",
+      "label": "Tenant API",
+      "weakness_ids": [
+        "W-TENANT-AUTH"
+      ]
+    },
+    {
+      "id": "customer-db",
+      "type": "data-store",
+      "label": "Customer database",
+      "business_impact": "Cross-tenant exposure of regulated customer records",
+      "weakness_ids": [
+        "W-DB-ISOLATION"
+      ]
+    },
+    {
+      "id": "ci-runner",
+      "type": "build",
+      "label": "CI runner",
+      "weakness_ids": [
+        "W-OIDC-TRUST"
+      ]
+    },
+    {
+      "id": "artifact-registry",
+      "type": "registry",
+      "label": "Container registry",
+      "weakness_ids": [
+        "W-ARTIFACT-INTEGRITY"
+      ]
+    },
+    {
+      "id": "production-cluster",
+      "type": "compute",
+      "label": "Production Kubernetes cluster",
+      "business_impact": "Compromise of production workloads and service identities"
+    },
+    {
+      "id": "ai-agent",
+      "type": "ai-service",
+      "label": "AI agent"
+    },
+    {
+      "id": "tool-broker",
+      "type": "service",
+      "label": "AI tool broker",
+      "weakness_ids": [
+        "W-TOOL-AUTH"
+      ]
+    },
+    {
+      "id": "internal-admin-api",
+      "type": "service",
+      "label": "Internal administrative API"
+    }
+  ],
+  "edges": [
+    {
+      "source": "internet",
+      "target": "api-gateway",
+      "weakness_ids": []
+    },
+    {
+      "source": "api-gateway",
+      "target": "tenant-api",
+      "weakness_ids": []
+    },
+    {
+      "source": "tenant-api",
+      "target": "customer-db",
+      "weakness_ids": []
+    },
+    {
+      "source": "ci-runner",
+      "target": "artifact-registry",
+      "weakness_ids": []
+    },
+    {
+      "source": "artifact-registry",
+      "target": "production-cluster",
+      "weakness_ids": []
+    },
+    {
+      "source": "internet",
+      "target": "ai-agent",
+      "weakness_ids": []
+    },
+    {
+      "source": "ai-agent",
+      "target": "tool-broker",
+      "weakness_ids": []
+    },
+    {
+      "source": "tool-broker",
+      "target": "internal-admin-api",
+      "weakness_ids": [
+        "W-TOOL-BOUNDARY"
+      ]
+    }
+  ],
+  "weaknesses": [
+    {
+      "id": "W-API-AUTH",
+      "title": "API edge authentication policy gap",
+      "likelihood": 3,
+      "impact": 4,
+      "mitigations": [
+        "Enforce authentication at gateway and service boundaries",
+        "Add negative authentication tests"
+      ]
+    },
+    {
+      "id": "W-TENANT-AUTH",
+      "title": "Object-level tenant authorization not consistently enforced",
+      "likelihood": 4,
+      "impact": 5,
+      "mitigations": [
+        "Derive tenant context from verified identity claims",
+        "Enforce object-level authorization on every request"
+      ]
+    },
+    {
+      "id": "W-DB-ISOLATION",
+      "title": "Database access path lacks defense-in-depth tenant isolation",
+      "likelihood": 3,
+      "impact": 5,
+      "mitigations": [
+        "Apply database row-level security",
+        "Use tenant-scoped service identities and query tests"
+      ]
+    },
+    {
+      "id": "W-OIDC-TRUST",
+      "title": "CI OIDC trust policy is broader than required",
+      "likelihood": 3,
+      "impact": 4,
+      "mitigations": [
+        "Restrict OIDC subject and audience claims",
+        "Use protected environments and short-lived credentials"
+      ]
+    },
+    {
+      "id": "W-ARTIFACT-INTEGRITY",
+      "title": "Artifact provenance and signature enforcement are incomplete",
+      "likelihood": 3,
+      "impact": 5,
+      "mitigations": [
+        "Require signed artifacts and verified provenance",
+        "Enforce admission-time image verification"
+      ]
+    },
+    {
+      "id": "W-TOOL-AUTH",
+      "title": "AI tool broker does not independently authorize each action",
+      "likelihood": 4,
+      "impact": 4,
+      "mitigations": [
+        "Authorize every tool call using user and workload identity",
+        "Use a strict tool allowlist and scoped credentials"
+      ]
+    },
+    {
+      "id": "W-TOOL-BOUNDARY",
+      "title": "Tool broker to admin API trust boundary is weak",
+      "likelihood": 3,
+      "impact": 5,
+      "mitigations": [
+        "Require downstream authorization and step-up approval",
+        "Validate arguments and enforce action-level policy"
+      ]
+    }
+  ]
+}
