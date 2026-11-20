@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0",
+  "evidence": [
+    {"id":"EV-001","system_id":"AI-001","control_id":"GOV-01","type":"inventory_record","description":"Synthetic inventory record with owners and lifecycle state","owner":"AI Governance","collected_on":"2026-08-01","valid_until":"2027-02-01","location":"sample://evidence/ai-001-inventory","classification":"internal"},
+    {"id":"EV-002","system_id":"AI-001","control_id":"SEC-01","type":"access_review","description":"Synthetic access review result","owner":"Security Engineering","collected_on":"2026-08-01","valid_until":"2027-02-01","location":"sample://evidence/ai-001-access","classification":"internal"},
+    {"id":"EV-003","system_id":"AI-001","control_id":"DATA-01","type":"data_lineage","description":"Synthetic approved source and retention record","owner":"Data Governance","collected_on":"2026-08-01","valid_until":"2027-02-01","location":"sample://evidence/ai-001-data","classification":"confidential"},
+    {"id":"EV-004","system_id":"AI-001","control_id":"AI-01","type":"model_provenance","description":"Synthetic model version and approval record","owner":"AI Platform","collected_on":"2026-08-01","valid_until":"2027-02-01","location":"sample://evidence/ai-001-model","classification":"internal"},
+    {"id":"EV-005","system_id":"AI-001","control_id":"OPS-01","type":"monitoring_test","description":"Synthetic alert and monitoring validation","owner":"SRE","collected_on":"2026-08-01","valid_until":"2027-02-01","location":"sample://evidence/ai-001-monitoring","classification":"internal"}
+  ]
+}
