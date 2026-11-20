@@ -1,5 +1,6 @@
 """Loopback-only HTTP API for the synthetic AI security SOC lab."""
 import json
+from urllib.parse import unquote
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from threading import Lock
@@ -100,7 +101,7 @@ class Handler(BaseHTTPRequestHandler):
         if not self.path.startswith(prefix):
             self._send(404, {"error": "Not found"})
             return
-        incident_id = self.path[len(prefix):]
+        incident_id = unquote(self.path[len(prefix):])
         if not incident_id or "/" in incident_id:
             self._send(404, {"error": "Not found"})
             return
