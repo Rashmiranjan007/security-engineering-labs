@@ -1,0 +1,26 @@
+{
+  "prompt_injection": {
+    "title": "Prompt injection investigation",
+    "steps": ["Preserve prompt and retrieved-context evidence with sensitive values redacted.", "Identify the untrusted instruction source and affected conversation/session.", "Verify system/developer instruction separation and retrieval trust boundaries.", "Block or isolate the affected session if policy bypass is confirmed.", "Add regression cases and validate the fix before closure."]
+  },
+  "cross_tenant_retrieval": {
+    "title": "Cross-tenant retrieval containment",
+    "steps": ["Immediately disable or block the affected retrieval path.", "Preserve tenant IDs, caller identity, document reference, and authorization decision.", "Determine whether data was returned to an unauthorized tenant or only denied.", "Review vector-store filters, cache keys, service identity, and authorization enforcement.", "Require independent security validation before restoring service."]
+  },
+  "unauthorized_tool_call": {
+    "title": "Agent tool privilege misuse",
+    "steps": ["Deny the requested tool action and suspend the affected agent session if necessary.", "Preserve tool name, arguments metadata, actor, resource scope, and approval state.", "Review server-side authorization, least-privilege scopes, and human approval gates.", "Check for downstream changes using the system of record.", "Re-enable only after negative authorization tests pass."]
+  },
+  "sensitive_output": {
+    "title": "Sensitive output exposure",
+    "steps": ["Suppress further delivery and preserve a redacted evidence copy.", "Identify the data classification and whether the value is synthetic or real.", "If a real credential was exposed, rotate it through the approved secrets process.", "Review retrieval permissions, output filtering, and logging redaction.", "Validate with safe canary tests before closure."]
+  },
+  "model_integrity_failure": {
+    "title": "Model artifact integrity failure",
+    "steps": ["Quarantine the artifact or deployment through the approved platform process.", "Compare observed digest with the approved immutable manifest.", "Verify signature, provenance attestation, source, and promotion approval.", "Review registry and deployment audit history for unauthorized changes.", "Promote a verified artifact and re-check integrity at deployment."]
+  },
+  "policy_drift": {
+    "title": "AI policy drift",
+    "steps": ["Identify the approved and observed policy versions and change window.", "Determine whether the drift is authorized, accidental, or malicious.", "Restore the approved baseline or obtain documented risk approval.", "Review deployment identity and policy change audit trail.", "Add drift detection and an owner for ongoing compliance."]
+  }
+}
