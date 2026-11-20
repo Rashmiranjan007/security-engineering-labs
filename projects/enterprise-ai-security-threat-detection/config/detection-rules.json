@@ -63,5 +63,71 @@
       "Policy as Code"
     ],
     "recommendation": "Compare the deployed policy version with the approved baseline and restore or approve the change."
+  },
+  {
+    "rule_id": "EKS-DET-001",
+    "event_type": "k8s_exec_into_ai_pod",
+    "severity": "high",
+    "risk_score": 8,
+    "framework_refs": [
+      "Kubernetes Audit",
+      "MITRE ATT&CK T1609"
+    ],
+    "recommendation": "Validate the Kubernetes identity and change ticket; preserve audit context, inspect process activity, and revoke unexpected access."
+  },
+  {
+    "rule_id": "EKS-DET-002",
+    "event_type": "privileged_ai_workload",
+    "severity": "critical",
+    "risk_score": 10,
+    "framework_refs": [
+      "Kubernetes Pod Security Standards",
+      "MITRE ATT&CK T1611"
+    ],
+    "recommendation": "Prevent or isolate the privileged AI workload through the approved platform control; inspect admission decisions and host access."
+  },
+  {
+    "rule_id": "EKS-DET-003",
+    "event_type": "service_account_token_anomaly",
+    "severity": "critical",
+    "risk_score": 10,
+    "framework_refs": [
+      "Kubernetes Workload Identity",
+      "MITRE ATT&CK T1552"
+    ],
+    "recommendation": "Revoke the affected identity/session through the platform process; inspect token audience, issuer, RBAC bindings, and CloudTrail activity."
+  },
+  {
+    "rule_id": "EKS-DET-004",
+    "event_type": "network_policy_drift",
+    "severity": "high",
+    "risk_score": 8,
+    "framework_refs": [
+      "Kubernetes Network Policy",
+      "Zero Trust"
+    ],
+    "recommendation": "Restore the approved network policy after validating the change; review namespace ingress/egress paths and change ownership."
+  },
+  {
+    "rule_id": "EKS-DET-005",
+    "event_type": "container_image_digest_mismatch",
+    "severity": "critical",
+    "risk_score": 10,
+    "framework_refs": [
+      "Container Supply Chain",
+      "Artifact Integrity"
+    ],
+    "recommendation": "Stop promotion of the mismatched image; verify immutable digest, signature, provenance, and deployment approval."
+  },
+  {
+    "rule_id": "EKS-DET-006",
+    "event_type": "runtime_threat_detection",
+    "severity": "critical",
+    "risk_score": 10,
+    "framework_refs": [
+      "Runtime Threat Detection",
+      "MITRE ATT&CK"
+    ],
+    "recommendation": "Follow the runtime alert triage process; preserve process and container context, assess scope, and contain only through approved cluster operations."
   }
 ]
