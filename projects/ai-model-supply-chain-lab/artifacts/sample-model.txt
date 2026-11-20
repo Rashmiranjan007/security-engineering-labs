@@ -1,0 +1,4 @@
+SYNTHETIC MODEL ARTIFACT - NOT A REAL ML MODEL
+model_id=demo-classifier
+version=1.0.0
+purpose=offline supply-chain verification example
