@@ -29,7 +29,7 @@ Inference pod -> workload identity -> scoped cloud services. NetworkPolicy -> ap
 - policies/kyverno/require-approved-ai-workloads.yaml — admission policy examples.
 - tools/validate.py and tests/test_validate.py — offline static checks.
 
-## Run the offline checks
+## How to run
 Requires Python 3.10+ and uses only the standard library:
 - python -m unittest discover -s projects/kubernetes-ai-workload-security/tests -v
 - python projects/kubernetes-ai-workload-security/tools/validate.py
