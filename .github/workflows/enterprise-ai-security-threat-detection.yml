@@ -31,3 +31,9 @@ jobs:
       - name: Run SOC lab unit tests
         working-directory: projects/enterprise-ai-security-threat-detection
         run: python -m unittest discover -s soc-lab/tests -v
+      - name: Run EKS runtime adapter tests
+        working-directory: projects/enterprise-ai-security-threat-detection
+        run: python -m unittest discover -s eks-runtime-simulation/tests -v
+      - name: Validate EKS telemetry dry run
+        working-directory: projects/enterprise-ai-security-threat-detection/eks-runtime-simulation
+        run: python simulate.py --dry-run
