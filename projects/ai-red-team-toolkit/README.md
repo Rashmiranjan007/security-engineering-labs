@@ -10,7 +10,7 @@ A structured catalogue and validation starter for assessing AI application secur
 - Test methodology, evidence expectations, and authorization guardrails
 - Unit tests for catalogue validation
 
-## Run locally
+## How to run
 
 Requires Python 3.10+ and uses only the Python standard library.
 
