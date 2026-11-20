@@ -23,6 +23,28 @@ I am a Principal Information Security Engineer with 12+ years of experience acro
 | [AI Red Team Automation Framework](projects/ai-red-team-automation-framework/README.md) | Execute deterministic AI security simulations against a local mock target | Prompt injection, RAG isolation, agent authorization, canary leakage, abuse throttling, risk scoring, JSON/Markdown reports, CI tests |
 | [Enterprise AI Security Threat Detection Platform](projects/enterprise-ai-security-threat-detection/README.md) | Enterprise AI security architecture, detection engineering, risk operations, and governance | Reference architecture, six detection rules, synthetic event engine, risk scoring, incident reports, interactive local dashboard, simulated SOC console, EKS runtime telemetry adapter, Kubernetes detection rules, incident correlation, response playbooks, CI tests |
 
+## How to run the portfolio
+
+There is no single repository-wide install: each lab has its own prerequisites and safe execution steps. Open the relevant project README below and follow its **How to run** section. Most Python-only labs use Python 3.10+ and the standard library; the hands-on AI Agent lab additionally needs Docker Compose and local Ollama/Qdrant services, while the cloud and Kubernetes examples require the relevant sandbox tools and credentials.
+
+| Lab | Run guide |
+|---|---|
+| Cloud / Terraform | [Cloud Security Posture](projects/cloud-security-posture/README.md#how-to-run) |
+| Kubernetes hardening | [Kubernetes Security](projects/kubernetes-security/README.md#how-to-run) |
+| Kubernetes AI workloads | [Kubernetes AI Workload Security](projects/kubernetes-ai-workload-security/README.md#how-to-run) |
+| AI application security | [AI Security](projects/ai-security/README.md#how-to-run) |
+| AI agent + RAG | [Hands-on AI Agent Security](projects/ai-agent-security-lab/README.md#how-to-run) |
+| AI architecture and policy | [Enterprise AI Security Architecture](projects/enterprise-ai-security-architecture/README.md#how-to-run) |
+| AI runtime controls | [AI Runtime Security](projects/ai-runtime-security-lab/README.md#how-to-run) |
+| AI red-team catalogue | [AI Red Team Toolkit](projects/ai-red-team-toolkit/README.md#how-to-run) |
+| AI red-team automation | [AI Red Team Automation](projects/ai-red-team-automation-framework/README.md#how-to-run) |
+| Model supply chain | [AI Model Supply Chain](projects/ai-model-supply-chain-lab/README.md#how-to-run) |
+| AI assessment framework | [AI Security Assessment](projects/ai-security-assessment-framework/README.md#how-to-run) |
+| Enterprise AI SOC + EKS | [Threat Detection Platform](projects/enterprise-ai-security-threat-detection/README.md#how-to-run) |
+| Enterprise threat modeling | [Threat Modeling](Threat-Modeling/enterprise-cloud-ai-platform/README.md#how-to-run) |
+
+Start with a local/offline validation command before deploying any manifest or Terraform plan. Review every plan and manifest, use disposable environments, and never commit credentials or production telemetry.
+
 ## Engineering approach
 
 - Threat-model trust boundaries, assets, abuse cases, and residual risk.
