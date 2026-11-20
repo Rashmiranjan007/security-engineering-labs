@@ -1,0 +1,41 @@
+name: Enterprise AI Governance GRC
+
+on:
+  push:
+    paths:
+      - "projects/enterprise-ai-governance-grc/**"
+      - ".github/workflows/enterprise-ai-governance-grc.yml"
+  pull_request:
+    paths:
+      - "projects/enterprise-ai-governance-grc/**"
+      - ".github/workflows/enterprise-ai-governance-grc.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-governance-framework:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate inventory and control catalogue
+        run: |
+          python -m json.tool projects/enterprise-ai-governance-grc/data/ai-inventory.json >/dev/null
+          python -m json.tool projects/enterprise-ai-governance-grc/data/control-catalogue.json >/dev/null
+          python -m json.tool projects/enterprise-ai-governance-grc/audit/evidence-register.json >/dev/null
+      - name: Run governance engine unit tests
+        run: python -m unittest discover -s projects/enterprise-ai-governance-grc/tests -v
+      - name: Generate synthetic assessment report
+        run: |
+          cd projects/enterprise-ai-governance-grc
+          python tools/governance_engine.py --inventory data/ai-inventory.json --controls data/control-catalogue.json --output-dir /tmp/ai-grc-reports
+          test -s /tmp/ai-grc-reports/latest.json
+          test -s /tmp/ai-grc-reports/latest.md
+      - name: Validate dashboard and policy artefacts
+        run: |
+          test -s projects/enterprise-ai-governance-grc/dashboard/index.html
+          test -s projects/enterprise-ai-governance-grc/governance/ai-governance-policy.md
