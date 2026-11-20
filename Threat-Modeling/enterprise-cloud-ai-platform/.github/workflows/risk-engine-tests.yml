@@ -1,0 +1,26 @@
+name: Threat model risk-engine tests
+
+on:
+  push:
+    paths:
+      - "Threat-Modeling/enterprise-cloud-ai-platform/**"
+  pull_request:
+    paths:
+      - "Threat-Modeling/enterprise-cloud-ai-platform/**"
+
+permissions:
+  contents: read
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Threat-Modeling/enterprise-cloud-ai-platform/tools
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run risk engine unit tests
+        run: python -m unittest -v
