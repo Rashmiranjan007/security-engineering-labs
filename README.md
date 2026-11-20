@@ -16,6 +16,7 @@ I am a Principal Information Security Engineer with 12+ years of experience acro
 | [AI Red Team Toolkit](projects/ai-red-team-toolkit/README.md) | Structured, authorized AI security testing | Test methodology, OWASP-aligned synthetic test catalogue, catalogue validator |
 | [Enterprise AI Security Architecture](projects/enterprise-ai-security-architecture/README.md) | Enterprise LLM and agent security | Architecture, threat model, RAG/identity/data controls, tool authorization policy tests |
 | [Hands-on AI Agent Security Lab](projects/ai-agent-security-lab/README.md) | Runnable local LLM + RAG + agent-tool security lab | Ollama, Qdrant, FastAPI, tenant ACLs, server-side tool policy, Docker Compose |
+| [Enterprise AI Security Assessment Framework](projects/ai-security-assessment-framework/README.md) | Risk-based assessment of LLM, RAG, agents, model supply chain, and runtime controls | Reference architecture, control matrix, assessment playbook, 20 synthetic tests, catalogue validator |
 
 ## Engineering approach
 
@@ -43,6 +44,10 @@ projects/
   ai-red-team-toolkit/
     test-cases/
     docs/
+  ai-security-assessment-framework/
+    docs/
+    test-cases/
+    tools/
 .github/workflows/
 ```
 
