@@ -27,18 +27,27 @@ TOOL_RULES = {
     },
 }
 
+# Trusted synthetic resource inventory. Never accept resource ownership from the API caller.
+DEMO_RESOURCE_TENANTS = {
+    "ticket-100": "tenant-a",
+    "ticket-200": "tenant-b",
+}
 
-def authorize_tool(principal: Principal, tool: str, action: str, resource_tenant: str | None,
+
+def authorize_tool(principal: Principal, tool: str, action: str, resource_id: str,
                    arguments: dict[str, Any], approval_ref: str | None = None) -> ToolDecision:
     rule = TOOL_RULES.get(tool)
     if not rule or action != rule["action"]:
         return ToolDecision(Decision.DENY, "Tool or action is not allowlisted")
-    if resource_tenant != principal.tenant_id:
-        return ToolDecision(Decision.DENY, "Resource tenant mismatch")
+    resource_tenant = DEMO_RESOURCE_TENANTS.get(resource_id)
+    if resource_tenant is None or resource_tenant != principal.tenant_id:
+        return ToolDecision(Decision.DENY, "Resource is unknown or outside the principal tenant")
     if not principal.roles.intersection(rule["roles"]):
         return ToolDecision(Decision.DENY, "Role is not authorized")
     if not isinstance(arguments, dict) or set(arguments) != rule["args"]:
         return ToolDecision(Decision.DENY, "Arguments do not match strict schema")
+    if arguments.get("ticket_id") != resource_id:
+        return ToolDecision(Decision.DENY, "Argument resource does not match authorized resource")
     if any(not isinstance(v, str) or not v.strip() or len(v) > 128 for v in arguments.values()):
         return ToolDecision(Decision.DENY, "Invalid argument value")
     if tool == "update_ticket" and arguments["status"] not in {"open", "in_progress", "resolved"}:
