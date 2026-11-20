@@ -1,0 +1,21 @@
+{
+  "model_id": "demo-classifier",
+  "version": "1.0.0",
+  "publisher": "portfolio-lab",
+  "source": "https://models.example.org/demo-classifier",
+  "artifact_path": "artifacts/sample-model.txt",
+  "sha256": "505c97b11fa41ddf05b591d79b10c5896de9508960e091fc14cf2ea19f59528a",
+  "license": "Apache-2.0",
+  "created_at": "2026-11-20T00:00:00Z",
+  "provenance": {
+    "build_id": "synthetic-build-001",
+    "source_revision": "demo-revision",
+    "pipeline": "offline-example"
+  },
+  "approval": {
+    "status": "approved",
+    "reviewer": "security-review-demo",
+    "approved_at": "2026-11-20T00:00:00Z",
+    "approved_sha256": "505c97b11fa41ddf05b591d79b10c5896de9508960e091fc14cf2ea19f59528a"
+  }
+}
