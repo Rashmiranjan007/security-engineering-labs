@@ -10,6 +10,7 @@ A practical reference implementation for governing enterprise AI systems across 
 - A deterministic Python assessment engine that calculates inherent and residual risk, flags missing evidence and overdue review dates, and generates JSON/Markdown reports.
 - Vendor due-diligence questionnaire, model card template, audit evidence register and AI incident playbook.
 - A local dashboard that visualizes the generated assessment report.
+- A continuous-compliance extension that normalizes synthetic findings from AI security, EKS/cloud posture and model-supply-chain exports, maps them to controls, and generates an evidence-linked remediation backlog.
 - Unit tests and GitHub Actions validation.
 
 ## Quick start
@@ -24,6 +25,19 @@ python -m http.server 8000
 ```
 
 Open [http://localhost:8000/dashboard/](http://localhost:8000/dashboard/). The dashboard loads `../reports/latest.json` relative to its page. Run the engine first.
+
+### Continuous compliance integration
+
+From the GRC project directory:
+
+```bash
+cd continuous-compliance
+python tools/compliance_pipeline.py --sources data/source-findings.json --rules data/control-mappings.json --output-dir reports
+python -m unittest discover -s tests -v
+python -m http.server 8001
+```
+
+Open [http://localhost:8001/dashboard/](http://localhost:8001/dashboard/). This demo normalizes eight synthetic findings from three source families and maps them to the GRC control catalogue. It does not call vendor APIs or create tickets.
 
 To assess a different inventory, supply a JSON file following the schema in `docs/data-schema.md`. The engine never calls external services or changes systems.
 
@@ -50,6 +64,7 @@ Mappings are indicative crosswalks for learning and control organization, not st
 - `tools/` — offline assessment and reporting engine.
 - `dashboard/` — dependency-free local report viewer.
 - `tests/` — automated validation.
+- `continuous-compliance/` — source export contract, control mappings, finding normalizer, remediation backlog, dashboard and tests.
 
 ## Production adoption considerations
 
