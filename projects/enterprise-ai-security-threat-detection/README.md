@@ -63,6 +63,10 @@ python -m unittest discover -s tests -v
 
 The JSON and Markdown reports are written to `reports/latest.json` and `reports/latest.md`. The sample data is synthetic.
 
+## Local dashboard
+
+A dependency-free browser dashboard provides incident KPIs, severity distribution, workload exposure, searchable and filterable detections, and a selectable incident investigation panel. See [dashboard instructions](dashboard/README.md). Generate the local report first, then serve the project directory with Python's built-in HTTP server.
+
 ## Risk scoring
 
 Each matched event receives a severity and a configurable risk score from the rule catalogue. The aggregate score is capped at 100 for dashboard presentation. This is a prioritization aid, not a probability of compromise or a compliance score. Tune weights against business impact, exposure, exploitability, and asset criticality before production use.
