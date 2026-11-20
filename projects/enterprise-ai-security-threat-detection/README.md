@@ -63,19 +63,19 @@ python detector.py --input scenarios/sample-events.json
 python -m unittest discover -s tests -v
 ```
 
-The JSON and Markdown reports are written to `reports/latest.json` and `reports/latest.md`. The sample data is synthetic.
+The JSON and Markdown reports are written to `reports/latest.json` and `reports/latest.md`. The sample data is synthetic. Run the command from the project directory shown above.
 
 ## Local dashboard
 
-A dependency-free browser dashboard provides incident KPIs, severity distribution, workload exposure, searchable and filterable detections, and a selectable incident investigation panel. See [dashboard instructions](dashboard/README.md). Generate the local report first, then serve the project directory with Python's built-in HTTP server.
+A dependency-free browser dashboard provides incident KPIs, severity distribution, workload exposure, searchable and filterable detections, and a selectable incident investigation panel. See [dashboard instructions](dashboard/README.md). From this project's directory, run `python detector.py` to generate `reports/latest.json`, then in a second terminal from the same directory run `python -m http.server 8000`. Open [http://localhost:8000/dashboard/](http://localhost:8000/dashboard/).
 
 ## Local SOC simulation
 
-A loopback-only SOC console adds simulated telemetry ingestion, workload/actor/time-window correlation, incident ownership, an audited lifecycle, and event-specific response playbooks. See [SOC lab instructions](soc-lab/README.md). Start it with `python soc-lab/server.py` from this project directory. The service is bound to localhost and is not a production integration.
+A loopback-only SOC console adds simulated telemetry ingestion, workload/actor/time-window correlation, incident ownership, an audited lifecycle, and event-specific response playbooks. See [SOC lab instructions](soc-lab/README.md). From this project's directory run `python soc-lab/server.py`, or `cd soc-lab && python server.py`. Open [http://127.0.0.1:8765](http://127.0.0.1:8765). The service is bound to localhost and is not a production integration.
 
 ## EKS runtime-to-SOC integration
 
-The [EKS runtime simulation](eks-runtime-simulation/README.md) normalizes synthetic Kubernetes audit, admission, workload identity, NetworkPolicy drift, image-integrity, and runtime-sensor signals into the SOC event schema. It feeds the same local API and detection rules, creating incidents and response playbooks. This is a local simulation only; it does not connect to AWS, EKS, or a runtime security vendor.
+The [EKS runtime simulation](eks-runtime-simulation/README.md) normalizes synthetic Kubernetes audit, admission, workload identity, NetworkPolicy drift, image-integrity, and runtime-sensor signals into the SOC event schema. It feeds the same local API and detection rules, creating incidents and response playbooks. Start the SOC server first; in another terminal run `cd projects/enterprise-ai-security-threat-detection/eks-runtime-simulation`, then `python simulate.py --dry-run` and `python simulate.py`. This is a local simulation only; it does not connect to AWS, EKS, or a runtime security vendor.
 
 ## Risk scoring
 
