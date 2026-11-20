@@ -20,6 +20,7 @@ I am a Principal Information Security Engineer with 12+ years of experience acro
 | [Enterprise AI Security Assessment Framework](projects/ai-security-assessment-framework/README.md) | Risk-based assessment of LLM, RAG, agents, model supply chain, and runtime controls | Reference architecture, control matrix, assessment playbook, 20 synthetic tests, catalogue validator |
 | [AI Runtime Security Lab](projects/ai-runtime-security-lab/README.md) | Runtime guardrails and detection simulation for AI applications and agents | Prompt-injection indicators, tenant binding, tool authorization, approval gates, abuse limits, output redaction, tests |
 | [AI Model Supply Chain Security Lab](projects/ai-model-supply-chain-lab/README.md) | Verify model artifact integrity and promotion provenance | SHA-256 verification, source/license allowlists, digest-bound approval, tamper and path-traversal tests |
+| [AI Red Team Automation Framework](projects/ai-red-team-automation-framework/README.md) | Execute deterministic AI security simulations against a local mock target | Prompt injection, RAG isolation, agent authorization, canary leakage, abuse throttling, risk scoring, JSON/Markdown reports, CI tests |
 
 ## Engineering approach
 
@@ -51,12 +52,16 @@ projects/
     docs/
     test-cases/
     tools/
+  ai-red-team-automation-framework/
+    test-cases/
+    tests/
+    reports/ (generated)
 .github/workflows/
 ```
 
 ## Validation
 
-GitHub Actions workflows validate the AI application lab, infrastructure examples, AI red-team catalogue, enterprise AI policy engine, and hands-on AI agent lab policy tests. See each project README for prerequisites and safe execution instructions.
+GitHub Actions workflows validate the AI application lab, infrastructure examples, AI red-team catalogue, enterprise AI policy engine, and hands-on AI agent lab policy tests. The AI Red Team Automation Framework runs a local deterministic mock suite, verifies that intentionally vulnerable control profiles are detected, and executes unit tests. See each project README for prerequisites and safe execution instructions.
 
 ## Disclaimer
 
