@@ -1,0 +1,155 @@
+{
+  "schema_version": "1.0",
+  "system": "Fictional Enterprise Cloud and AI Platform",
+  "environment": "reference",
+  "components": [
+    {
+      "id": "api-gateway",
+      "name": "Public API Gateway",
+      "type": "api_gateway",
+      "zone": "edge",
+      "exposure": "internet",
+      "data_classification": "confidential",
+      "tags": ["internet-facing", "tenant-aware"],
+      "properties": {
+        "authentication": "oidc",
+        "rate_limiting": false,
+        "audit_logging": true,
+        "authorization": "delegated"
+      }
+    },
+    {
+      "id": "tenant-api",
+      "name": "Tenant Domain API",
+      "type": "service",
+      "zone": "application",
+      "exposure": "private",
+      "data_classification": "restricted",
+      "tags": ["tenant-aware", "privileged"],
+      "properties": {
+        "authentication": "workload_identity",
+        "authorization": "resource_and_tenant_scoped",
+        "audit_logging": true,
+        "least_privilege": false
+      }
+    },
+    {
+      "id": "event-broker",
+      "name": "Business Event Broker",
+      "type": "message_broker",
+      "zone": "application",
+      "exposure": "private",
+      "data_classification": "confidential",
+      "tags": ["event-driven"],
+      "properties": {
+        "authentication": "workload_identity",
+        "message_integrity": false,
+        "replay_protection": false,
+        "audit_logging": false
+      }
+    },
+    {
+      "id": "customer-db",
+      "name": "Customer Data Store",
+      "type": "database",
+      "zone": "data",
+      "exposure": "private",
+      "data_classification": "restricted",
+      "tags": ["tenant-aware"],
+      "properties": {
+        "encryption_at_rest": true,
+        "tenant_isolation": false,
+        "least_privilege": true,
+        "audit_logging": true,
+        "public_access": false
+      }
+    },
+    {
+      "id": "ai-agent",
+      "name": "AI Agent and Tool Broker",
+      "type": "ai_service",
+      "zone": "application",
+      "exposure": "private",
+      "data_classification": "restricted",
+      "tags": ["ai-enabled", "privileged"],
+      "properties": {
+        "authentication": "workload_identity",
+        "tool_allowlist": false,
+        "per_tool_authorization": false,
+        "input_screening": false,
+        "output_screening": false,
+        "audit_logging": true
+      }
+    }
+  ],
+  "flows": [
+    {
+      "id": "flow-client-api",
+      "source": "external-client",
+      "destination": "api-gateway",
+      "protocol": "https",
+      "crosses_trust_boundary": true,
+      "data_classification": "confidential",
+      "properties": {
+        "authentication": "none",
+        "encryption_in_transit": true,
+        "integrity_protection": true,
+        "rate_limited": false
+      }
+    },
+    {
+      "id": "flow-api-service",
+      "source": "api-gateway",
+      "destination": "tenant-api",
+      "protocol": "https",
+      "crosses_trust_boundary": true,
+      "data_classification": "restricted",
+      "properties": {
+        "authentication": "workload_identity",
+        "encryption_in_transit": true,
+        "integrity_protection": true,
+        "identity_context_validated": false
+      }
+    },
+    {
+      "id": "flow-service-events",
+      "source": "tenant-api",
+      "destination": "event-broker",
+      "protocol": "messaging",
+      "crosses_trust_boundary": false,
+      "data_classification": "confidential",
+      "properties": {
+        "authentication": "workload_identity",
+        "encryption_in_transit": true,
+        "integrity_protection": false,
+        "replay_protection": false
+      }
+    },
+    {
+      "id": "flow-service-db",
+      "source": "tenant-api",
+      "destination": "customer-db",
+      "protocol": "database",
+      "crosses_trust_boundary": true,
+      "data_classification": "restricted",
+      "properties": {
+        "authentication": "workload_identity",
+        "encryption_in_transit": true,
+        "tenant_context_enforced": false
+      }
+    },
+    {
+      "id": "flow-agent-tool",
+      "source": "ai-agent",
+      "destination": "internal-admin-api",
+      "protocol": "https",
+      "crosses_trust_boundary": true,
+      "data_classification": "restricted",
+      "properties": {
+        "authentication": "workload_identity",
+        "tool_authorization": false,
+        "human_approval_for_sensitive_actions": false
+      }
+    }
+  ]
+}
