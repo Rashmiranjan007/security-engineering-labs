@@ -141,6 +141,7 @@ projects/
     incident-management/ (AI incident playbook)
     tools/ and tests/ (offline risk engine and validation)
     dashboard/ (local GRC report viewer)
+    continuous-compliance/ (source finding normalization, control mapping, remediation backlog and dashboard)
   malware-analysis-reverse-engineering/
     tools/ (static triage and advanced analysis)
     ghidra-case-study/ (benign C training program and Ghidra exercises)
