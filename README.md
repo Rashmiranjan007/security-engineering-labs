@@ -10,7 +10,7 @@ I am a Principal Information Security Engineer with 12+ years of experience acro
 
 | Project | What it demonstrates | Current assets |
 |---|---|---|
-| [Cloud Security Posture](projects/cloud-security-posture/README.md) | AWS security foundations and Terraform IaC controls | Private S3 baseline, architecture, threat model, operating checklist |
+| [AWS EKS Security Engineering Platform](projects/aws-eks-ai-security-platform/README.md) | Private EKS foundation and AI workload security | Terraform VPC/EKS/KMS/IRSA, private API, managed nodes, Pod Security, NetworkPolicy, Kyverno, CI validation |\n| [Cloud Security Posture](projects/cloud-security-posture/README.md) | AWS security foundations and Terraform IaC controls | Private S3 baseline, architecture, threat model, operating checklist |
 | [Kubernetes Security](projects/kubernetes-security/README.md) | Workload hardening and cluster guardrails | Restricted namespace, hardened deployment, default-deny network policy, Kyverno validation example, security baseline |
 | [Kubernetes AI Workload Security](projects/kubernetes-ai-workload-security/README.md) | Secure AI model-serving workloads on Kubernetes/EKS | GPU isolation, workload identity, model supply-chain controls, NetworkPolicy, Kyverno admission policy, validation tests |
 | [AI Security](projects/ai-security/README.md) | Identity-aware AI/RAG application security | JWT identity, role authorization, tenant-filtered retrieval, security telemetry, API tests |
@@ -29,7 +29,7 @@ There is no single repository-wide install: each lab has its own prerequisites a
 
 | Lab | Run guide |
 |---|---|
-| Cloud / Terraform | [Cloud Security Posture](projects/cloud-security-posture/README.md#how-to-run) |
+| AWS EKS security platform | [AWS EKS Security Engineering Platform](projects/aws-eks-ai-security-platform/README.md#how-to-run) |\n| Cloud / Terraform | [Cloud Security Posture](projects/cloud-security-posture/README.md#how-to-run) |
 | Kubernetes hardening | [Kubernetes Security](projects/kubernetes-security/README.md#how-to-run) |
 | Kubernetes AI workloads | [Kubernetes AI Workload Security](projects/kubernetes-ai-workload-security/README.md#how-to-run) |
 | AI application security | [AI Security](projects/ai-security/README.md#how-to-run) |
@@ -93,7 +93,7 @@ projects/
 
 ## Validation
 
-GitHub Actions workflows validate the AI application lab, infrastructure examples, AI red-team catalogue, enterprise AI policy engine, and hands-on AI agent lab policy tests. The AI Red Team Automation Framework runs a local deterministic mock suite, verifies that intentionally vulnerable control profiles are detected, and executes unit tests. The Enterprise AI Security Threat Detection Platform validates synthetic telemetry, applies versioned detection rules, generates risk-ranked reports, includes a local interactive dashboard and SOC console, normalizes synthetic EKS runtime signals, and runs detection, SOC lifecycle, and adapter integration tests. See each project README for prerequisites and safe execution instructions.
+GitHub Actions workflows validate the AWS EKS security platform configuration (formatting and offline checks only; no cloud deployment), the AI application lab, infrastructure examples, AI red-team catalogue, enterprise AI policy engine, and hands-on AI agent lab policy tests. The AI Red Team Automation Framework runs a local deterministic mock suite, verifies that intentionally vulnerable control profiles are detected, and executes unit tests. The Enterprise AI Security Threat Detection Platform validates synthetic telemetry, applies versioned detection rules, generates risk-ranked reports, includes a local interactive dashboard and SOC console, normalizes synthetic EKS runtime signals, and runs detection, SOC lifecycle, and adapter integration tests. See each project README for prerequisites and safe execution instructions.
 
 ## Disclaimer
 
