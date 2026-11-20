@@ -142,6 +142,10 @@ projects/
     tools/ and tests/ (offline risk engine and validation)
     dashboard/ (local GRC report viewer)
     continuous-compliance/ (source finding normalization, control mapping, remediation backlog and dashboard)
+  cryptography-secrets-management/
+    docs/ (cryptography, key lifecycle, cloud/Kubernetes secrets, threat model)
+    tests/ (authenticated encryption, HMAC, scanner tests)
+    crypto_lab.py and secret_scanner.py
   malware-analysis-reverse-engineering/
     tools/ (static triage and advanced analysis)
     ghidra-case-study/ (benign C training program and Ghidra exercises)
