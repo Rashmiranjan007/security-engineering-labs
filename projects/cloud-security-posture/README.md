@@ -7,7 +7,7 @@ Hands-on Terraform examples for secure AWS foundations, identity controls, and r
 - Server-side encryption and versioning
 - Terraform provider and variable configuration
 
-## Run in an isolated AWS sandbox
+## How to run
 Requires Terraform 1.5+ and AWS credentials configured through a secure local profile or environment-based identity. Never commit credentials.
 
 ```bash
