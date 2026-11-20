@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "mappings": [
+    {"signal":"cross_tenant_retrieval","control_id":"SEC-01","recommendation":"Enforce tenant-scoped authorization at retrieval and data-access layers; add negative cross-tenant tests.","owner_role":"AI Platform / Security Engineering"},
+    {"signal":"unauthorized_tool_call","control_id":"SEC-01","recommendation":"Apply server-side tool allowlists, per-user authorization and least-privilege service identities; retain approval for consequential actions.","owner_role":"AI Platform / Application Security"},
+    {"signal":"model_integrity_failure","control_id":"AI-03","recommendation":"Quarantine the artifact, verify trusted provenance and digest, block promotion, and investigate registry and pipeline audit events.","owner_role":"ML Platform / Product Security"},
+    {"signal":"privileged_ai_workload","control_id":"SEC-02","recommendation":"Remove privileged execution, apply restricted pod security, drop capabilities and validate admission policy.","owner_role":"Kubernetes Platform / Cloud Security"},
+    {"signal":"image_digest_mismatch","control_id":"AI-01","recommendation":"Stop rollout, verify the expected immutable digest and provenance, then redeploy an approved artifact.","owner_role":"Platform Engineering / Product Security"},
+    {"signal":"network_policy_drift","control_id":"SEC-02","recommendation":"Restore approved default-deny network boundaries and validate required ingress/egress paths.","owner_role":"Kubernetes Platform / Cloud Security"},
+    {"signal":"artifact_digest_mismatch","control_id":"AI-03","recommendation":"Reject the artifact, compare against the approved manifest, investigate mutation and require digest-bound approval before promotion.","owner_role":"ML Platform / Supply Chain Security"},
+    {"signal":"unapproved_model_source","control_id":"TPR-01","recommendation":"Block ingestion, complete supplier and source due diligence, verify licensing and provenance, and approve the source before use.","owner_role":"AI Governance / Procurement / ML Platform"},
+    {"signal":"sensitive_output","control_id":"DATA-01","recommendation":"Review data classification, output filtering, minimization and retention; confirm exposure scope and privacy escalation.","owner_role":"Data Governance / Privacy / Security"},
+    {"signal":"prompt_injection","control_id":"SEC-03","recommendation":"Validate instruction/data separation, retrieved-content trust boundaries, tool authorization and adversarial test coverage.","owner_role":"AI Security / Application Security"},
+    {"signal":"policy_drift","control_id":"OPS-01","recommendation":"Compare deployed configuration with approved baseline, investigate unauthorized change and restore policy-as-code controls.","owner_role":"Platform Engineering / Security Operations"}
+  ]
+}
